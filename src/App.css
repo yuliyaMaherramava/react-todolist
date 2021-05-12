@@ -1,10 +1,10 @@
-.App {
+.app {
   margin-top: 30px;
 }
-.toAddContainer {
+.add-container {
   display: flex;
   justify-content: center;
 }
-.toAddContainer div {
+.add-container div {
   margin-right: 10px;
 }
