@@ -1,0 +1,40 @@
+
+.app {
+  margin-top: 30px;
+}
+.add-container {
+  display: flex;
+  justify-content: center;
+}
+.add-container div {
+  margin-right: 10px;
+}
+.columns-container{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top:50px;
+}
+.column{
+  padding:10px;
+  flex-basis: 200px;
+}
+.column h3{
+  margin-top: 5px;
+  text-align: center;
+}
+.task{
+  display: flex;
+  justify-content: space-between;
+  padding:5px;
+}
+.task button{
+  background:transparent;
+  border:none;
+}
+.task:hover{
+  background-color: #aba9a933;
+  border-radius: 4%;
+}
+.task p{
+  margin:0
+}
