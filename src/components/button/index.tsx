@@ -1,21 +1,14 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import Button from '@material-ui/core/Button';
 
 type PropsType = {
-  AddTask: () => void;
+  addTask: () => void;
 };
 
-const ButtonComponent: React.FC<PropsType> = (props) => {
-  return (
-    <Button
-      type="submit"
-      onClick={() => props.AddTask()}
-      variant="contained"
-      color="primary"
-    >
-      Add Task
-    </Button>
-  );
-};
+const ButtonComponent: React.FC<PropsType> = ({ addTask }) => (
+  <Button type="submit" onClick={addTask} variant="contained" color="primary">
+    Add Task
+  </Button>
+);
 
 export default ButtonComponent;

@@ -1,22 +1,17 @@
-import React from "react";
-import Task from "./Task";
-import Paper from "@material-ui/core/Paper";
-import { TaskType } from "../../App";
+import React from 'react';
+import Paper from '@material-ui/core/Paper';
+import Task from './task';
+import classes from './index.module.scss';
+import { PropsType } from '../../types';
 
-type PropsType = {
-  name: string;
-  tasks: { [key: string]: TaskType };
-  tasksIdFromColumn: Array<string>;
-};
-
-const Column: React.FC<PropsType> = (props) => {
-  let taskElements = props.tasksIdFromColumn.map((id: string) => (
-    <Task key={id} name={props.tasks[id].name} />
+const Column: React.FC<PropsType> = ({ name, tasks }) => {
+  const taskElements = tasks.map((task) => (
+    <Task key={task.id} name={task.name} />
   ));
 
   return (
-    <Paper elevation={3} className="column">
-      <h3>{props.name}</h3>
+    <Paper elevation={3} className={classes.column}>
+      <h3>{name}</h3>
       {taskElements}
     </Paper>
   );

@@ -1,14 +1,14 @@
-import React, { ChangeEvent } from "react";
-import { TextField } from "@material-ui/core";
+import React, { ChangeEvent } from 'react';
+import { TextField } from '@material-ui/core';
 
 type PropsType = {
-  newTaskText: string;
-  updateNewTaskText: (text: string) => void;
+  value: string;
+  onChange: (text: string) => void;
 };
 
-const InputComponent: React.FC<PropsType> = (props) => {
-  let onNewTaskTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.updateNewTaskText(e.target.value);
+const InputComponent: React.FC<PropsType> = ({ value, onChange }) => {
+  const onNewTaskTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
   };
 
   return (
@@ -18,7 +18,7 @@ const InputComponent: React.FC<PropsType> = (props) => {
       variant="outlined"
       size="medium"
       type="text"
-      value={props.newTaskText}
+      value={value}
       onChange={onNewTaskTextChange}
     />
   );
