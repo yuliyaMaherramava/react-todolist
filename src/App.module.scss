@@ -1,17 +1,18 @@
-@import 'Variables.scss';
+@import 'variables.scss';
 
 body{
-  background-color: $background-color;
+  background-color: $background-color-main-board;
 };
 .app {
   margin-top: 30px;
 };
-.add-container {
+.add-container{
   display: flex;
   justify-content: center;
-};
-.add-container div {
-  margin-right: 10px;
+
+  div {
+    margin-right: 10px;
+  }
 };
 .columns-container{
   display: flex;

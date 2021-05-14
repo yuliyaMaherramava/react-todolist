@@ -1,15 +1,17 @@
-@import '../../../Variables.scss';
+@import '../../../variables.scss';
+
+.task:hover{
+    background-color: $gray;
+    border-radius: 4px;
+};
 .task{
     display: flex;
     justify-content: space-between;
     padding:5px;
     border:1px dashed #c7c7c7;
     margin-bottom: 5px;
-};
-.task:hover{
-    background-color: $gray;
-    border-radius: 4px;
-};
-.task p{
-    margin:0
+    
+    p{
+        margin:0
+    }
 };
