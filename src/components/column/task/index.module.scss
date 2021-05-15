@@ -1,0 +1,18 @@
+@import '../../../variables.scss';
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    padding:5px;
+    border:1px dashed $light-gray;
+    margin-bottom: 5px;
+    
+    &:hover{
+        background-color: $gray;
+        border-radius: 4px;
+    }
+
+    p {
+        margin:0;
+    }
+};
