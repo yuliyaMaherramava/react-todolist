@@ -39,10 +39,11 @@ const App: React.FC = () => {
       <div className={classes['add-container']}>
         <InputComponent
           value="something"
-          onChange={(newTaskText) => console.log('you enter', newTaskText)} // To do: replace console.log by function of updating text
+          onChange={(newText) => console.log('you enter', newText)} // To do: replace console.log by function of updating text
         />
         <ButtonComponent
-          addTask={() => console.log('you added a task')} // To do: replace console.log by function of adding task
+          value="Add Task"
+          onClick={() => console.log('you added a task')} // To do: replace console.log by function of adding task
         />
       </div>
       <div className={classes['columns-container']}>{columnsElements}</div>

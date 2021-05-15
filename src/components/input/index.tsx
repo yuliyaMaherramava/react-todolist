@@ -7,7 +7,7 @@ type PropsType = {
 };
 
 const InputComponent: React.FC<PropsType> = ({ value, onChange }) => {
-  const onNewTaskTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
@@ -19,7 +19,7 @@ const InputComponent: React.FC<PropsType> = ({ value, onChange }) => {
       size="medium"
       type="text"
       value={value}
-      onChange={onNewTaskTextChange}
+      onChange={onTextChange}
     />
   );
 };
