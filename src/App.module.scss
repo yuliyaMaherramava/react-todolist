@@ -1,0 +1,25 @@
+@import 'variables.scss';
+
+body {
+  background-color: $white-gray;
+};
+
+.app {
+  margin-top: 30px;
+};
+
+.add-container {
+  display: flex;
+  justify-content: center;
+
+  div {
+    margin-right: 10px;
+  }
+};
+
+.columns-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top:50px;
+};
+

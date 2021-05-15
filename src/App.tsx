@@ -1,115 +1,54 @@
-import React from "react";
-import "./App.scss";
-import InputComponent from "./components/input";
-import ButtonComponent from "./components/button";
-import Column from "./components/column";
+import React from 'react';
+import classes from './App.module.scss';
+import InputComponent from './components/input';
+import ButtonComponent from './components/button';
+import Column from './components/column';
 
-function App() {
-  let columnsElements = State.columns.allIds.map((column: any) => {
-    return (
-      <Column
-        name={State.columns.byId[column].name}
-        key={State.columns.byId[column].id}
-        tasksIdFromColumn={State.columns.byId[column].tasks}
-        tasks={State.tasks.byId}
-      />
-    );
-  });
+// state is here just for showing that all components work
+const columns = [
+  {
+    id: '1',
+    name: 'To do',
+    tasks: [
+      { id: 1, name: 'To make some cofee' },
+      { id: 2, name: 'To add sugar' },
+    ],
+  },
+  {
+    id: '2',
+    name: 'In progress',
+    tasks: [
+      { id: 3, name: 'To male some noise' },
+      { id: 4, name: 'To enjoy' },
+    ],
+  },
+  {
+    id: '3',
+    name: 'Done',
+    tasks: [{ id: 6, name: 'To get up in the morning' }],
+  },
+];
+
+const App: React.FC = () => {
+  const columnsElements = columns.map((column) => (
+    <Column name={column.name} key={column.id} tasks={column.tasks} />
+  ));
 
   return (
-    <div className="app">
-      <div className="add-container">
+    <div className={classes.app}>
+      <div className={classes['add-container']}>
         <InputComponent
-          newTaskText={"something"}
-          updateNewTaskText={(newTaskText) =>
-            console.log("you enter", newTaskText)
-          }
+          value="something"
+          onChange={(newText) => console.log('you enter', newText)} // To do: replace console.log by function of updating text
         />
         <ButtonComponent
-          AddTask={() => console.log("you added a task", State.newTaskText)}
+          value="Add Task"
+          onClick={() => console.log('you added a task')} // To do: replace console.log by function of adding task
         />
       </div>
-      <div className="columns-container">{columnsElements}</div>
+      <div className={classes['columns-container']}>{columnsElements}</div>
     </div>
   );
-}
+};
 
 export default App;
-
-//state is here just for showing that all components work
-export type TaskType = {
-  id: string;
-  name: string;
-  idColumn: string;
-};
-
-type ColumnType = {
-  id: string;
-  name: string;
-  tasks: Array<string>;
-};
-
-type StateType = {
-  columns: {
-    byId: {
-      [key: string]: ColumnType;
-    };
-    allIds: Array<string>;
-  };
-  tasks: {
-    byId: {
-      [key: string]: TaskType;
-    };
-    allIds: Array<string>;
-  };
-  newTaskText: string;
-};
-
-let State: StateType = {
-  columns: {
-    byId: {
-      column1: {
-        id: "column1",
-        name: "To do",
-        tasks: ["task1", "task4"],
-      },
-      column2: {
-        id: "column2",
-        name: "In progress",
-        tasks: ["task2"],
-      },
-      column3: {
-        id: "column3",
-        name: "Done",
-        tasks: ["task3"],
-      },
-    },
-    allIds: ["column1", "column2", "column3"],
-  },
-  tasks: {
-    byId: {
-      task1: {
-        id: "task1",
-        name: "To make some noise",
-        idColumn: "column1",
-      },
-      task2: {
-        id: "task2",
-        name: "To install necessary issues",
-        idColumn: "column2",
-      },
-      task3: {
-        id: "task3",
-        name: "To start working",
-        idColumn: "column3",
-      },
-      task4: {
-        id: "task4",
-        name: "To drink tea",
-        idColumn: "column1",
-      },
-    },
-    allIds: ["task1", "task2", "task3"],
-  },
-  newTaskText: "something",
-};
