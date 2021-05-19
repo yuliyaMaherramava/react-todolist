@@ -50,6 +50,7 @@ const columnReducer = (state = initialState, action: ActionTypes): ColumnStateTy
         byId: {
           ...state.byId,
           [columnId]: {
+            ...state.byId[columnId],
             tasks: state.byId[columnId].tasks.filter((id) => id !== taskId),
           },
         },

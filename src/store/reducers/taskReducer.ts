@@ -45,7 +45,7 @@ const taskReducer = (state = initialState, action: ActionTypes): TaskStateType =
           ...state.byId,
           [id]: {
             ...state.byId[id],
-            name: [text],
+            name: text,
           },
         },
       };

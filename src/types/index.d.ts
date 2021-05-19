@@ -15,18 +15,18 @@ type ColumnType = {
 export type ColumnStateType = {
     byId: {
         [key: string]: ColumnType;
-    };
+    }
     allIds: Array<string>;
 };
 
 export type TaskStateType = {
     byId: {
         [key: string]: TaskType;
-    };
+    }
     allIds: Array<string>;
 };
 
 export type StateType = {
     columns: ColumnStateType;
-    tasks:TaskStateType;
+    tasks: TaskStateType;
 };
