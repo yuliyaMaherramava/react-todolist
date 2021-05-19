@@ -9,20 +9,24 @@ type ColumnType = {
     id: string;
     name: string;
     tasks: Array<string>;
-    propertyOrder: number;
+    order: number;
+};
+
+export type ColumnStateType = {
+    byId: {
+        [key: string]: ColumnType;
+    };
+    allIds: Array<string>;
+};
+
+export type TaskStateType = {
+    byId: {
+        [key: string]: TaskType;
+    };
+    allIds: Array<string>;
 };
 
 export type StateType = {
-    columns: {
-        byId: {
-            [key: string]: ColumnType;
-        };
-        allIds: Array<string>;
-    };
-    tasks: {
-        byId: {
-            [key: string]: TaskType;
-        };
-        allIds: Array<string>;
-    };
+    columns: ColumnStateType;
+    tasks:TaskStateType;
 };

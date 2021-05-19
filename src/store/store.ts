@@ -1,13 +1,13 @@
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, combineReducers } from 'redux';
 import taskReducer from './reducers/taskReducer';
+import columnReducer from './reducers/columnReducer';
 
 const rootReducer = combineReducers({
-  task: taskReducer,
+  tasks: taskReducer,
+  columns: columnReducer,
 });
 
-type RootReducerType = typeof rootReducer;
-export type AppStateType = ReturnType<RootReducerType>; // for future typing mapStateToProps
-
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;
