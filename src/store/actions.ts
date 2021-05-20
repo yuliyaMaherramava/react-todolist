@@ -12,6 +12,7 @@ export const addTask = (name: string): actionTypes.AddTaskType => {
     },
   };
 };
+
 export const deleteTask = (taskId: string, columnId: string): actionTypes.DeleteTaskType => ({
   type: types.DELETE_TASK,
   payload: {
@@ -19,6 +20,7 @@ export const deleteTask = (taskId: string, columnId: string): actionTypes.Delete
     columnId,
   },
 });
+
 export const editTask = (id: string, text: string): actionTypes.EditTaskType => ({
   type: types.EDIT_TASK,
   payload: {

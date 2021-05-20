@@ -8,6 +8,4 @@ const rootReducer = combineReducers({
   columns: columnReducer,
 });
 
-const store = createStore(rootReducer, composeWithDevTools());
-
-export default store;
+export default createStore(rootReducer, composeWithDevTools());
