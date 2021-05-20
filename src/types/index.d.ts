@@ -1,4 +1,4 @@
-type TaskType = {
+export type TaskType = {
     id: string;
     name: string;
     columnId: string;
@@ -21,7 +21,7 @@ export type ColumnStateType = {
 
 export type TaskStateType = {
     byId: {
-        [key: string]: TaskType;
+        [key: string]: TaskType ;
     }
     allIds: Array<string>;
 };

@@ -26,3 +26,16 @@ export const editTask = (id: string, text: string): actionTypes.EditTaskType => 
     text,
   },
 });
+export const editColumn = (id: string, text: string): actionTypes.EditColumnType => ({
+  type: types.EDIT_COLUMN,
+  payload: {
+    id,
+    text,
+  },
+});
+export const deleteColumn = (id: string): actionTypes.DeleteColumnType => ({
+  type: types.DELETE_COLUMN,
+  payload: {
+    id,
+  },
+});

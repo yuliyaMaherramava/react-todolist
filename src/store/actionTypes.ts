@@ -21,4 +21,22 @@ export type EditTaskType = {
         text: string
     }
 };
-export type ActionTypes = AddTaskType | DeleteTaskType | EditTaskType;
+export type EditColumnType = {
+    type: typeof types.EDIT_COLUMN,
+    payload: {
+        id: string,
+        text: string
+    }
+};
+export type DeleteColumnType = {
+    type: typeof types.DELETE_COLUMN,
+    payload: {
+        id:string
+    }
+};
+
+export type ActionTypes = AddTaskType
+| DeleteTaskType
+| EditTaskType
+| EditColumnType
+| DeleteColumnType;

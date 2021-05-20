@@ -7,7 +7,7 @@ const initialState: ColumnStateType = {
     1: {
       id: '1',
       name: 'To do',
-      tasks: [],
+      tasks: ['4', '3', '2', '1'],
       order: 1,
     },
     2: {
@@ -52,6 +52,28 @@ const columnReducer = (state = initialState, action: ActionTypes): ColumnStateTy
           [columnId]: {
             ...state.byId[columnId],
             tasks: state.byId[columnId].tasks.filter((id) => id !== taskId),
+          },
+        },
+      };
+    }
+    case types.DELETE_COLUMN: {
+      const columnsWithoutDeleted = { ...state.byId };
+      delete columnsWithoutDeleted[action.payload.id];
+      return {
+        ...state,
+        byId: { ...columnsWithoutDeleted },
+        allIds: state.allIds.filter((id) => id !== action.payload.id),
+      };
+    }
+    case types.EDIT_COLUMN: {
+      const { id, text } = action.payload;
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            name: text,
           },
         },
       };

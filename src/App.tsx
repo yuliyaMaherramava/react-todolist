@@ -1,46 +1,43 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classes from './App.module.scss';
 import InputComponent from './components/input';
 import ButtonComponent from './components/button';
 import Column from './components/column';
-
-// state is here just for showing that all components work
-const columns = [
-  {
-    id: '1',
-    name: 'To do',
-    tasks: [
-      { id: 1, name: 'To make some cofee' },
-      { id: 2, name: 'To add sugar' },
-    ],
-  },
-  {
-    id: '2',
-    name: 'In progress',
-    tasks: [
-      { id: 3, name: 'To male some noise' },
-      { id: 4, name: 'To enjoy' },
-    ],
-  },
-  {
-    id: '3',
-    name: 'Done',
-    tasks: [{ id: 6, name: 'To get up in the morning' }],
-  },
-];
+import { columnWithTasksSelector } from './store/selectors';
+import { addTask } from './store/actions';
 
 const App: React.FC = () => {
-  const columnsElements = columns.map((column) => (
-    <Column name={column.name} key={column.id} tasks={column.tasks} />
-  ));
+  const [textInput, setTextInput] = useState<string>('');
 
+  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTextInput(e.target.value);
+  };
+
+  const columnAllIds = useSelector(columnWithTasksSelector);
+
+  const dispatch = useDispatch();
+
+  const onAddTask = () => {
+    dispatch(addTask(textInput));
+    setTextInput('');
+  };
+
+  const columnsElements = columnAllIds.map((column) => (
+    <Column
+      name={column.name}
+      key={column.id}
+      id={column.id}
+      tasks={column.tasks}
+    />
+  ));
   return (
     <div className={classes.app}>
       <div className={classes['add-container']}>
-        <InputComponent />
+        <InputComponent value={textInput} onChange={onTextChange} />
         <ButtonComponent
           value="Add Task"
-          onClick={() => console.log('you added a task')} // To do: replace console.log by function of adding task
+          onClick={onAddTask}
         />
       </div>
       <div className={classes['columns-container']}>{columnsElements}</div>
