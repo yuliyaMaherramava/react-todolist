@@ -5,7 +5,7 @@ export type AddTaskType = {
     payload: {
         id: string,
         name: string
-    }
+    },
 };
 
 export type DeleteTaskType = {
@@ -13,7 +13,7 @@ export type DeleteTaskType = {
     payload: {
         taskId: string,
         columnId: string,
-    }
+    },
 };
 
 export type EditTaskType = {
@@ -21,20 +21,20 @@ export type EditTaskType = {
     payload: {
         id: string,
         text: string
-    }
+    },
 };
 export type EditColumnType = {
     type: typeof types.EDIT_COLUMN,
     payload: {
         id: string,
         text: string
-    }
+    },
 };
 export type DeleteColumnType = {
     type: typeof types.DELETE_COLUMN,
     payload: {
         id: string
-    }
+    },
 };
 
 export type ActionTypes = AddTaskType
