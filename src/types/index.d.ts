@@ -1,32 +1,32 @@
-export type TaskType = {
+interface TaskType {
     id: string;
     name: string;
     columnId: string;
     createdAt: Date;
-};
+}
 
-type ColumnType = {
+interface ColumnType {
     id: string;
     name: string;
     tasks: Array<string>;
     order: number;
-};
+}
 
-export type ColumnStateType = {
+interface ColumnStateType {
     byId: {
         [key: string]: ColumnType;
     }
     allIds: Array<string>;
-};
+}
 
-export type TaskStateType = {
+interface TaskStateType {
     byId: {
         [key: string]: TaskType ;
     }
     allIds: Array<string>;
-};
+}
 
-export type StateType = {
+interface StateType {
     columns: ColumnStateType;
     tasks: TaskStateType;
-};
+}

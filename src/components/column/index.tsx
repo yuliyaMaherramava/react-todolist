@@ -6,7 +6,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
 import classes from './index.module.scss';
 import Task from './task';
-import { TaskType } from '../../types';
 import { deleteColumn, deleteTask, editColumn } from '../../store/actions';
 
 type PropsType = {

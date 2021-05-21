@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { StateType, ColumnStateType, TaskStateType } from '../types';
 
 const columnsSelector = (state: StateType): ColumnStateType => state.columns;
 const tasksSelector = (state: StateType): TaskStateType => state.tasks;
