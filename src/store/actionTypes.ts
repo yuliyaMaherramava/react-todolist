@@ -33,7 +33,7 @@ export type EditColumnType = {
 export type DeleteColumnType = {
     type: typeof types.DELETE_COLUMN,
     payload: {
-        id:string
+        id: string
     }
 };
 
