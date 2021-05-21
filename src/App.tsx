@@ -31,7 +31,7 @@ const columns = [
 
 const App: React.FC = () => {
   const columnsElements = columns.map((column) => (
-    <Column name={column.name} key={column.id} tasks={column.tasks} />
+    <Column name={column.name} key={column.id} tasks={column.tasks as unknown as Array<TaskType>} />
   ));
 
   return (

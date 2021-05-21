@@ -1,4 +1,3 @@
-import { TaskStateType } from '../../types';
 import { ActionTypes } from '../actionTypes';
 import * as types from '../types';
 
