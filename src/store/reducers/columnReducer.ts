@@ -6,7 +6,7 @@ const initialState: ColumnStateType = {
     1: {
       id: '1',
       name: 'To do',
-      tasks: ['4', '3', '2', '1'],
+      tasks: [],
       order: 1,
     },
     2: {

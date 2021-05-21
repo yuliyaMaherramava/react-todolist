@@ -21,7 +21,7 @@ interface ColumnStateType {
 
 interface TaskStateType {
     byId: {
-        [key: string]: TaskType ;
+        [key: string]: TaskType;
     }
     allIds: Array<string>;
 }
