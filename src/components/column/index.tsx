@@ -2,7 +2,6 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Task from './task';
 import classes from './index.module.scss';
-import { TaskType } from '../../types';
 
 type PropsType = {
   name: string;

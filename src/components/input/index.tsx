@@ -1,14 +1,10 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { TextField } from '@material-ui/core';
 
-type PropsType = {
-  value: string;
-  onChange: (text: string) => void;
-};
-
-const InputComponent: React.FC<PropsType> = ({ value, onChange }) => {
+const InputComponent: React.FC = () => {
+  const [textInput, setTextInput] = useState<string>('');
   const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
+    setTextInput(e.target.value);
   };
 
   return (
@@ -18,7 +14,7 @@ const InputComponent: React.FC<PropsType> = ({ value, onChange }) => {
       variant="outlined"
       size="medium"
       type="text"
-      value={value}
+      value={textInput}
       onChange={onTextChange}
     />
   );

@@ -31,16 +31,13 @@ const columns = [
 
 const App: React.FC = () => {
   const columnsElements = columns.map((column) => (
-    <Column name={column.name} key={column.id} tasks={column.tasks} />
+    <Column name={column.name} key={column.id} tasks={column.tasks as unknown as Array<TaskType>} />
   ));
 
   return (
     <div className={classes.app}>
       <div className={classes['add-container']}>
-        <InputComponent
-          value="something"
-          onChange={(newText) => console.log('you enter', newText)} // To do: replace console.log by function of updating text
-        />
+        <InputComponent />
         <ButtonComponent
           value="Add Task"
           onClick={() => console.log('you added a task')} // To do: replace console.log by function of adding task
