@@ -3,8 +3,8 @@
 .task {
     display: flex;
     justify-content: space-between;
-    padding:5px;
-    border:1px dashed $light-gray;
+    padding: 5px;
+    border: 1px dashed $light-gray;
     margin-bottom: 5px;
     
     &:hover{
@@ -13,6 +13,6 @@
     }
 
     p {
-        margin:0;
+        margin: 0px;
     }
 };

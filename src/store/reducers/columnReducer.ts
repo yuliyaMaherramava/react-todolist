@@ -55,6 +55,28 @@ const columnReducer = (state = initialState, action: ActionTypes): ColumnStateTy
         },
       };
     }
+    case types.DELETE_COLUMN: {
+      const columnsWithoutDeleted = { ...state.byId };
+      delete columnsWithoutDeleted[action.payload.id];
+      return {
+        ...state,
+        byId: { ...columnsWithoutDeleted },
+        allIds: state.allIds.filter((id) => id !== action.payload.id),
+      };
+    }
+    case types.EDIT_COLUMN: {
+      const { id, text } = action.payload;
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            name: text,
+          },
+        },
+      };
+    }
     default:
       return state;
   }

@@ -1,23 +1,21 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import { TextField } from '@material-ui/core';
 
-const InputComponent: React.FC = () => {
-  const [textInput, setTextInput] = useState<string>('');
-  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value);
-  };
+type PropsType = {
+  value: string,
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void,
+ };
 
-  return (
-    <TextField
-      id="outlined-basic"
-      label="Enter a task"
-      variant="outlined"
-      size="medium"
-      type="text"
-      value={textInput}
-      onChange={onTextChange}
-    />
-  );
-};
+const InputComponent: React.FC<PropsType> = ({ value, onChange }) => (
+  <TextField
+    id="outlined-basic"
+    label="Enter a task"
+    variant="outlined"
+    size="medium"
+    type="text"
+    value={value}
+    onChange={onChange}
+  />
+);
 
 export default InputComponent;
