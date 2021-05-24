@@ -49,6 +49,19 @@ const taskReducer = (state = initialState, action: ActionTypes): TaskStateType =
         },
       };
     }
+    case types.DROP_TASK: {
+      const { destionationId, draggableId } = action.payload;
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [draggableId]: {
+            ...state.byId[draggableId],
+            columnId: destionationId,
+          },
+        },
+      };
+    }
     default:
       return state;
   }

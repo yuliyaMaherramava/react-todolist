@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Droppable } from 'react-beautiful-dnd';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -43,8 +44,8 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     dispatch(deleteColumn(id));
   };
 
-  const taskElements = tasks.map((task) => (
-    <Task key={task.id} name={task.name} id={task.id} columnId={task.columnId} />
+  const taskElements = tasks.map((task, index) => (
+    <Task key={task.id} name={task.name} id={task.id} columnId={task.columnId} index={index} />
   ));
   return (
     <Paper
@@ -69,7 +70,19 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
           <DeleteIcon fontSize="small" />
         </IconButton>
       </div>
-      {taskElements}
+      <Droppable droppableId={id}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+            {...provided.droppableProps}
+            className={`${classes['task-container']} ${snapshot.isDraggingOver ? classes.dragging : null}`}
+          >
+            {taskElements}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </Paper>
   );
 };
