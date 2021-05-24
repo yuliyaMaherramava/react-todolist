@@ -8,22 +8,21 @@ import { columnWithTasksSelector } from './store/selectors';
 import { addTask } from './store/actions';
 
 const App: React.FC = () => {
-  const [textInput, setTextInput] = useState<string>('');
-
-  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value);
-  };
-
-  const columnAllIds = useSelector(columnWithTasksSelector);
-
+  const [newTaskText, setNewTaskText] = useState<string>('');
   const dispatch = useDispatch();
 
-  const onAddTask = () => {
-    dispatch(addTask(textInput));
-    setTextInput('');
+  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTaskText(e.target.value);
   };
 
-  const columnsElements = columnAllIds.map((column) => (
+  const columns = useSelector(columnWithTasksSelector);
+
+  const onAddTask = () => {
+    dispatch(addTask(newTaskText));
+    setNewTaskText('');
+  };
+
+  const columnsElements = columns.map((column) => (
     <Column
       name={column.name}
       key={column.id}
@@ -34,7 +33,7 @@ const App: React.FC = () => {
   return (
     <div className={classes.app}>
       <div className={classes['add-container']}>
-        <InputComponent value={textInput} onChange={onTextChange} />
+        <InputComponent value={newTaskText} onChange={onTextChange} />
         <ButtonComponent
           value="Add Task"
           onClick={onAddTask}

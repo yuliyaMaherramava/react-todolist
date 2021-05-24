@@ -9,18 +9,18 @@ import Task from './task';
 import { deleteColumn, deleteTask, editColumn } from '../../store/actions';
 
 type PropsType = {
- name: string;
- tasks: Array<TaskType>;
- id: string;
+ name: string,
+ tasks: Array<TaskType>,
+ id: string,
 };
 
 const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
   const [editMode, setEditMode] = useState(false);
-  const [textInput, setTextInput] = useState<string>(name);
+  const [columnText, setColumnText] = useState<string>(name);
   const dispatch = useDispatch();
 
   const onColumnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value);
+    setColumnText(e.target.value);
   };
 
   const toggleEditMode = () => {
@@ -28,7 +28,7 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
   };
 
   const updateColumn = () => {
-    dispatch(editColumn(id, textInput));
+    dispatch(editColumn(id, columnText));
   };
 
   const onColumnBlur = () => {
@@ -46,6 +46,7 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
   const taskElements = tasks.map((task) => (
     <Task key={task.id} name={task.name} id={task.id} columnId={task.columnId} />
   ));
+
   return (
     <Paper
       elevation={3}
@@ -61,8 +62,8 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
             variant="outlined"
             onChange={onColumnChange}
             onBlur={onColumnBlur}
-            value={textInput}
-            placeholder={textInput}
+            value={columnText}
+            placeholder={columnText}
           />
         )}
         <IconButton aria-label="delete" className={classes.margin} onClick={onDeleteColumn}>

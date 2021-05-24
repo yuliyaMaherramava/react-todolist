@@ -2,8 +2,8 @@ import React, { ChangeEvent } from 'react';
 import { TextField } from '@material-ui/core';
 
 type PropsType = {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: string,
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void,
  };
 
 const InputComponent: React.FC<PropsType> = ({ value, onChange }) => (
