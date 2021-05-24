@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .column {
   padding: 10px;
   flex-basis: 300px;
@@ -22,7 +24,7 @@
   .task-container {
     min-height: 200px;
   }
-  & .dragging{
-    background-color: #5d74f517;
+  & .dragging {
+    background-color: $light-blue1;
   }
 };  
