@@ -7,21 +7,21 @@ import classes from './index.module.scss';
 import { deleteTask, editTask } from '../../../store/actions';
 
 type PropsType = {
-  name: string;
-  id: string;
-  columnId: string;
-  index: number;
+  name: string,
+  id: string,
+  columnId: string,
+  index: number,
 };
 
 const Task: React.FC<PropsType> = ({
   name, id, columnId, index,
 }) => {
   const [editMode, setEditMode] = useState(false);
-  const [textInput, setTextInput] = useState<string>(name);
+  const [taskText, setTaskText] = useState<string>(name);
   const dispatch = useDispatch();
 
   const onTaskChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value);
+    setTaskText(e.target.value);
   };
 
   const toggleEditMode = () => {
@@ -29,7 +29,7 @@ const Task: React.FC<PropsType> = ({
   };
 
   const updateTask = () => {
-    dispatch(editTask(id, textInput));
+    dispatch(editTask(id, taskText));
   };
 
   const onTaskBlur = () => {
@@ -59,8 +59,8 @@ const Task: React.FC<PropsType> = ({
             <input
               onChange={onTaskChange}
               onBlur={onTaskBlur}
-              value={textInput}
-              placeholder={textInput}
+              value={taskText}
+              placeholder={taskText}
             />
           )}
           <IconButton aria-label="delete" size="small" onClick={onDeleteTask}>

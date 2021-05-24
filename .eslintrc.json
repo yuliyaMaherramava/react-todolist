@@ -49,7 +49,28 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "import/prefer-default-export": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            {
+                "multiline": {
+                    "delimiter": "comma",
+                    "requireLast": true
+                },
+                "singleline": {
+                    "delimiter": "comma",
+                    "requireLast": true
+                },
+                "overrides": {
+                    "interface": {
+                        "multiline": {
+                            "delimiter": "semi",
+                            "requireLast": true
+                        }
+                    }
+                }
+            }
+        ]
     },
     "settings": {
         "import/resolver": {

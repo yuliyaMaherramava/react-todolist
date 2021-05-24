@@ -9,19 +9,18 @@ import { columnWithTasksSelector } from './store/selectors';
 import { addTask, dropTask } from './store/actions';
 
 const App: React.FC = () => {
-  const [textInput, setTextInput] = useState<string>('');
-
-  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextInput(e.target.value);
-  };
-
-  const columnAllIds = useSelector(columnWithTasksSelector);
-
+  const [newTaskText, setNewTaskText] = useState<string>('');
   const dispatch = useDispatch();
 
+  const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTaskText(e.target.value);
+  };
+
+  const columns = useSelector(columnWithTasksSelector);
+
   const onAddTask = () => {
-    dispatch(addTask(textInput));
-    setTextInput('');
+    dispatch(addTask(newTaskText));
+    setNewTaskText('');
   };
 
   const onDragEnd = ({ destination, source, draggableId }:DropResult) => {
@@ -35,7 +34,7 @@ const App: React.FC = () => {
     dispatch(dropTask(destination.droppableId, source.droppableId, draggableId));
   };
 
-  const columnsElements = columnAllIds.map((column) => (
+  const columnsElements = columns.map((column) => (
     <Column
       name={column.name}
       key={column.id}
@@ -47,7 +46,7 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={classes.app}>
         <div className={classes['add-container']}>
-          <InputComponent value={textInput} onChange={onTextChange} />
+          <InputComponent value={newTaskText} onChange={onTextChange} />
           <ButtonComponent value="Add Task" onClick={onAddTask} />
         </div>
         <div className={classes['columns-container']}>{columnsElements}</div>
