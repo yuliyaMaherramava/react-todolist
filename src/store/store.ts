@@ -3,7 +3,7 @@ import { createStore, combineReducers } from 'redux';
 import taskReducer from './reducers/taskReducer';
 import columnReducer from './reducers/columnReducer';
 
-function saveToLocalStorage(state:StateType) {
+function saveToLocalStorage(state: StateType) {
   try {
     const serialisedState = JSON.stringify(state);
     localStorage.setItem('persistantState', serialisedState);
@@ -15,7 +15,7 @@ function saveToLocalStorage(state:StateType) {
 function loadFromLocalStorage() {
   try {
     const serialisedState = localStorage.getItem('persistantState');
-    if (serialisedState === null) return undefined;
+    if (serialisedState === null) { return undefined; }
     return JSON.parse(serialisedState);
   } catch (e) {
     console.warn(e);

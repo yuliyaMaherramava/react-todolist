@@ -15,8 +15,9 @@ export const columnWithTasksSelector = createSelector(
   (columns, tasksState) => {
     const columnWithTasks = columns.map((column) => {
       const tasks = column.tasks.map((id) => tasksState.byId[id]).sort((task1, task2) => {
-        const date1 = (new Date(task1.createdAt)).getTime();
-        const date2 = new Date(task2.createdAt).getTime();
+        const getTimeFromData = (time: Date) => new Date(time).getTime();
+        const date1 = getTimeFromData(task1.createdAt);
+        const date2 = getTimeFromData(task2.createdAt);
         return date1 - date2;
       });
       return {
