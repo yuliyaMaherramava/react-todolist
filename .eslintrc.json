@@ -73,6 +73,9 @@
         ],
         "react/jsx-props-no-spreading": ["error", {
             "html": "ignore"
+        }],
+        "@typescript-eslint/type-annotation-spacing":["error", {
+            "after": true
         }]
     },
     "settings": {
