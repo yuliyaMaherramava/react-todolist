@@ -23,6 +23,7 @@ export type EditTaskType = {
         text: string,
     },
 };
+
 export type EditColumnType = {
     type: typeof types.EDIT_COLUMN,
     payload: {
@@ -30,6 +31,7 @@ export type EditColumnType = {
         text: string,
     },
 };
+
 export type DeleteColumnType = {
     type: typeof types.DELETE_COLUMN,
     payload: {
@@ -37,8 +39,20 @@ export type DeleteColumnType = {
     },
 };
 
+export type DropTaskType = {
+    type: typeof types.DROP_TASK,
+    payload: DropTaskPayloadType,
+};
+
+export type DropTaskPayloadType = {
+    destionationId: string,
+    sourceId: string,
+    draggableId: string,
+};
+
 export type ActionTypes = AddTaskType
 | DeleteTaskType
 | EditTaskType
 | EditColumnType
-| DeleteColumnType;
+| DeleteColumnType
+| DropTaskType;

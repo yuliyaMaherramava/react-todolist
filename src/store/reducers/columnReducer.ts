@@ -77,6 +77,25 @@ const columnReducer = (state = initialState, action: ActionTypes): ColumnStateTy
         },
       };
     }
+    case types.DROP_TASK: {
+      const { destionationId, sourceId, draggableId } = action.payload;
+      const sourceColumn = state.byId[sourceId];
+      const destinationColumn = state.byId[destionationId];
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [sourceId]: {
+            ...sourceColumn,
+            tasks: sourceColumn.tasks.filter((id) => id !== draggableId),
+          },
+          [destionationId]: {
+            ...destinationColumn,
+            tasks: [...destinationColumn.tasks, draggableId],
+          },
+        },
+      };
+    }
     default:
       return state;
   }
