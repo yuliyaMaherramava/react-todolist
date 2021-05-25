@@ -2,7 +2,7 @@
   "buttons": {
     "addTask": "Добавить задачу"
   },
-  "inputs":{
+  "inputs": {
     "enterTask": "Введите задачу"
   }
 }

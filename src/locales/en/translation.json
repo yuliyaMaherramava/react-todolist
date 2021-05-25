@@ -2,7 +2,7 @@
   "buttons": {
     "addTask": "Add a task"
   },
-  "inputs":{
+  "inputs": {
     "enterTask": "Enter a task"
   }
 }
