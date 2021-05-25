@@ -47,7 +47,7 @@ export type DropTaskType = {
 export type DropTaskPayloadType = {
     destionationId: string,
     sourceId: string,
-    draggableId:string,
+    draggableId: string,
 };
 
 export type ActionTypes = AddTaskType
