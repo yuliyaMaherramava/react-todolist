@@ -45,13 +45,11 @@ const Task: React.FC<PropsType> = ({
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
         <div
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...provided.draggableProps}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
           className={`${classes.task} ${snapshot.isDragging ? classes.dragging : null}`}
           onDoubleClick={toggleEditMode}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
           {!editMode ? (
             <p>{name}</p>
@@ -68,7 +66,6 @@ const Task: React.FC<PropsType> = ({
           </IconButton>
         </div>
       )}
-
     </Draggable>
   );
 };

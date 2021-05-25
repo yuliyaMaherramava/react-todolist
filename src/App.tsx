@@ -27,11 +27,14 @@ const App: React.FC = () => {
     if (!destination) {
       return;
     }
-    if (destination.droppableId === source.droppableId
-    ) {
+    if (destination.droppableId === source.droppableId) {
       return;
     }
-    dispatch(dropTask(destination.droppableId, source.droppableId, draggableId));
+    dispatch(dropTask({
+      destionationId: destination.droppableId,
+      sourceId: source.droppableId,
+      draggableId,
+    }));
   };
 
   const columnsElements = columns.map((column) => (

@@ -44,15 +44,7 @@ export const deleteColumn = (id: string): actionTypes.DeleteColumnType => ({
   },
 });
 
-export const dropTask = (
-  destionationId: string,
-  sourceId: string,
-  draggableId:string,
-): actionTypes.DropTaskType => ({
+export const dropTask = (payload: actionTypes.DropTaskPayloadType): actionTypes.DropTaskType => ({
   type: types.DROP_TASK,
-  payload: {
-    destionationId,
-    sourceId,
-    draggableId,
-  },
+  payload,
 });

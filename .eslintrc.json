@@ -70,7 +70,10 @@
                     }
                 }
             }
-        ]
+        ],
+        "react/jsx-props-no-spreading": ["error", {
+            "html": "ignore"
+        }]
     },
     "settings": {
         "import/resolver": {

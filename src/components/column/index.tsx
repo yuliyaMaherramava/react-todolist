@@ -74,10 +74,9 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
       <Droppable droppableId={id}>
         {(provided, snapshot) => (
           <div
-            ref={provided.innerRef}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-            {...provided.droppableProps}
             className={`${classes['task-container']} ${snapshot.isDraggingOver ? classes.dragging : null}`}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
           >
             {taskElements}
             {provided.placeholder}
