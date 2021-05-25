@@ -3,13 +3,14 @@ import { TextField } from '@material-ui/core';
 
 type PropsType = {
   value: string,
+  placeholder: string,
   onChange: (e: ChangeEvent<HTMLInputElement>) => void,
  };
 
-const InputComponent: React.FC<PropsType> = ({ value, onChange }) => (
+const InputComponent: React.FC<PropsType> = ({ value, onChange, placeholder }) => (
   <TextField
     id="outlined-basic"
-    label="Enter a task"
+    label={placeholder}
     variant="outlined"
     size="medium"
     type="text"

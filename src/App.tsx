@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import classes from './App.module.scss';
 import InputComponent from './components/input';
 import ButtonComponent from './components/button';
@@ -11,12 +12,20 @@ import { addTask, dropTask } from './store/actions';
 const App: React.FC = () => {
   const [newTaskText, setNewTaskText] = useState<string>('');
   const dispatch = useDispatch();
+  const columns = useSelector(columnWithTasksSelector);
+  const { t, i18n } = useTranslation();
+
+  const changeLanguageRu = () => {
+    i18n.changeLanguage('ru');
+  };
+
+  const changeLanguageEn = () => {
+    i18n.changeLanguage('en');
+  };
 
   const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskText(e.target.value);
   };
-
-  const columns = useSelector(columnWithTasksSelector);
 
   const onAddTask = () => {
     dispatch(addTask(newTaskText));
@@ -45,9 +54,13 @@ const App: React.FC = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={classes.app}>
+        <div className={classes.language}>
+          <ButtonComponent value="EN" onClick={changeLanguageEn} />
+          <ButtonComponent value="RU" onClick={changeLanguageRu} />
+        </div>
         <div className={classes['add-container']}>
-          <InputComponent value={newTaskText} onChange={onTextChange} />
-          <ButtonComponent value="Add Task" onClick={onAddTask} />
+          <InputComponent value={newTaskText} onChange={onTextChange} placeholder={t('inputs.enterTask')} />
+          <ButtonComponent value={t('buttons.addTask')} onClick={onAddTask} />
         </div>
         <div className={classes['columns-container']}>{columnsElements}</div>
       </div>

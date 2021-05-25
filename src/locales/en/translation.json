@@ -1,0 +1,8 @@
+{
+  "buttons": {
+    "addTask": "Add a task"
+  },
+  "inputs":{
+    "enterTask": "Enter a task"
+  }
+}
