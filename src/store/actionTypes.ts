@@ -41,11 +41,13 @@ export type DeleteColumnType = {
 
 export type DropTaskType = {
     type: typeof types.DROP_TASK,
-    payload: {
-        destionationId: string,
-        sourceId: string,
-        draggableId: string,
-    },
+    payload: DropTaskPayloadType,
+};
+
+export type DropTaskPayloadType = {
+    destionationId: string,
+    sourceId: string,
+    draggableId: string,
 };
 
 export type ActionTypes = AddTaskType

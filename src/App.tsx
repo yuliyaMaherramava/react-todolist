@@ -32,15 +32,18 @@ const App: React.FC = () => {
     setNewTaskText('');
   };
 
-  const onDragEnd = ({ destination, source, draggableId }:DropResult) => {
+  const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
     if (!destination) {
       return;
     }
-    if (destination.droppableId === source.droppableId
-    ) {
+    if (destination.droppableId === source.droppableId) {
       return;
     }
-    dispatch(dropTask(destination.droppableId, source.droppableId, draggableId));
+    dispatch(dropTask({
+      destionationId: destination.droppableId,
+      sourceId: source.droppableId,
+      draggableId,
+    }));
   };
 
   const columnsElements = columns.map((column) => (

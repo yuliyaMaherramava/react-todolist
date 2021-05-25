@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getTimeFromDate } from '../helpers';
 
 const columnsSelector = (state: StateType): ColumnStateType => state.columns;
 const tasksSelector = (state: StateType): TaskStateType => state.tasks;
@@ -15,8 +16,8 @@ export const columnWithTasksSelector = createSelector(
   (columns, tasksState) => {
     const columnWithTasks = columns.map((column) => {
       const tasks = column.tasks.map((id) => tasksState.byId[id]).sort((task1, task2) => {
-        const date1 = task1.createdAt.getTime();
-        const date2 = task2.createdAt.getTime();
+        const date1 = getTimeFromDate(task1.createdAt);
+        const date2 = getTimeFromDate(task2.createdAt);
         return date1 - date2;
       });
       return {
