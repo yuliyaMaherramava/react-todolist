@@ -14,7 +14,10 @@ type PropsType = {
 };
 
 const Task: React.FC<PropsType> = ({
-  name, id, columnId, index,
+  name,
+  id,
+  columnId,
+  index,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const [taskText, setTaskText] = useState<string>(name);

@@ -1,1 +1,1 @@
-export const getTimeFromData = (time: Date): number => new Date(time).getTime();
+export const getTimeFromDate = (date: Date): number => new Date(date).getTime();

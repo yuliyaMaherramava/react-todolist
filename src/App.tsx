@@ -23,7 +23,7 @@ const App: React.FC = () => {
     setNewTaskText('');
   };
 
-  const onDragEnd = ({ destination, source, draggableId }:DropResult) => {
+  const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
     if (!destination) {
       return;
     }
