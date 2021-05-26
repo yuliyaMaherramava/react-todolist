@@ -10,9 +10,9 @@ import Task from './task';
 import { deleteColumn, deleteTask, editColumn } from '../../store/actions';
 
 type PropsType = {
- name: string,
- tasks: Array<TaskType>,
- id: string,
+  name: string;
+  tasks: Array<TaskType>;
+  id: string;
 };
 
 const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
@@ -45,14 +45,17 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
   };
 
   const taskElements = tasks.map((task, index) => (
-    <Task key={task.id} name={task.name} id={task.id} columnId={task.columnId} index={index} />
+    <Task
+      key={task.id}
+      name={task.name}
+      id={task.id}
+      columnId={task.columnId}
+      index={index}
+    />
   ));
 
   return (
-    <Paper
-      elevation={3}
-      className={classes.column}
-    >
+    <Paper elevation={3} className={classes.column}>
       <div className={classes.header} onDoubleClick={toggleEditMode}>
         {!editMode ? (
           <h3>{name}</h3>
@@ -67,14 +70,20 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
             placeholder={columnText}
           />
         )}
-        <IconButton aria-label="delete" className={classes.margin} onClick={onDeleteColumn}>
+        <IconButton
+          aria-label="delete"
+          className={classes.margin}
+          onClick={onDeleteColumn}
+        >
           <DeleteIcon fontSize="small" />
         </IconButton>
       </div>
       <Droppable droppableId={id}>
         {(provided, snapshot) => (
           <div
-            className={`${classes['task-container']} ${snapshot.isDraggingOver ? classes.dragging : null}`}
+            className={`${classes['task-container']} ${
+              snapshot.isDraggingOver ? classes.dragging : null
+            }`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

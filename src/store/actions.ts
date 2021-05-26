@@ -13,7 +13,10 @@ export const addTask = (name: string): actionTypes.AddTaskType => {
   };
 };
 
-export const deleteTask = (taskId: string, columnId: string): actionTypes.DeleteTaskType => ({
+export const deleteTask = (
+  taskId: string,
+  columnId: string
+): actionTypes.DeleteTaskType => ({
   type: types.DELETE_TASK,
   payload: {
     taskId,
@@ -21,7 +24,10 @@ export const deleteTask = (taskId: string, columnId: string): actionTypes.Delete
   },
 });
 
-export const editTask = (id: string, text: string): actionTypes.EditTaskType => ({
+export const editTask = (
+  id: string,
+  text: string
+): actionTypes.EditTaskType => ({
   type: types.EDIT_TASK,
   payload: {
     id,
@@ -29,7 +35,10 @@ export const editTask = (id: string, text: string): actionTypes.EditTaskType => 
   },
 });
 
-export const editColumn = (id: string, text: string): actionTypes.EditColumnType => ({
+export const editColumn = (
+  id: string,
+  text: string
+): actionTypes.EditColumnType => ({
   type: types.EDIT_COLUMN,
   payload: {
     id,
@@ -44,7 +53,9 @@ export const deleteColumn = (id: string): actionTypes.DeleteColumnType => ({
   },
 });
 
-export const dropTask = (payload: actionTypes.DropTaskPayloadType): actionTypes.DropTaskType => ({
+export const dropTask = (
+  payload: actionTypes.DropTaskPayloadType
+): actionTypes.DropTaskType => ({
   type: types.DROP_TASK,
   payload,
 });

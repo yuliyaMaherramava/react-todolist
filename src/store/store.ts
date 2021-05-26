@@ -15,7 +15,9 @@ function saveToLocalStorage(state: StateType) {
 function loadFromLocalStorage() {
   try {
     const serialisedState = localStorage.getItem('persistantState');
-    if (serialisedState === null) { return undefined; }
+    if (serialisedState === null) {
+      return undefined;
+    }
     return JSON.parse(serialisedState);
   } catch (e) {
     console.warn(e);
@@ -28,7 +30,11 @@ const rootReducer = combineReducers({
   columns: columnReducer,
 });
 
-const store = createStore(rootReducer, loadFromLocalStorage(), composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  loadFromLocalStorage(),
+  composeWithDevTools()
+);
 
 store.subscribe(() => saveToLocalStorage(store.getState()));
 

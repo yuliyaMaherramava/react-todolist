@@ -7,18 +7,13 @@ import classes from './index.module.scss';
 import { deleteTask, editTask } from '../../../store/actions';
 
 type PropsType = {
-  name: string,
-  id: string,
-  columnId: string,
-  index: number,
+  name: string;
+  id: string;
+  columnId: string;
+  index: number;
 };
 
-const Task: React.FC<PropsType> = ({
-  name,
-  id,
-  columnId,
-  index,
-}) => {
+const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
   const [editMode, setEditMode] = useState(false);
   const [taskText, setTaskText] = useState<string>(name);
   const dispatch = useDispatch();
@@ -49,7 +44,9 @@ const Task: React.FC<PropsType> = ({
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
-          className={`${classes.task} ${snapshot.isDragging ? classes.dragging : null}`}
+          className={`${classes.task} ${
+            snapshot.isDragging ? classes.dragging : null
+          }`}
           onDoubleClick={toggleEditMode}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

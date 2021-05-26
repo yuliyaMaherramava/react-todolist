@@ -39,11 +39,13 @@ const App: React.FC = () => {
     if (destination.droppableId === source.droppableId) {
       return;
     }
-    dispatch(dropTask({
-      destionationId: destination.droppableId,
-      sourceId: source.droppableId,
-      draggableId,
-    }));
+    dispatch(
+      dropTask({
+        destionationId: destination.droppableId,
+        sourceId: source.droppableId,
+        draggableId,
+      })
+    );
   };
 
   const columnsElements = columns.map((column) => (
@@ -62,7 +64,11 @@ const App: React.FC = () => {
           <ButtonComponent value="RU" onClick={changeLanguageRu} />
         </div>
         <div className={classes['add-container']}>
-          <InputComponent value={newTaskText} onChange={onTextChange} placeholder={t('inputs.enterTask')} />
+          <InputComponent
+            value={newTaskText}
+            onChange={onTextChange}
+            placeholder={t('inputs.enterTask')}
+          />
           <ButtonComponent value={t('buttons.addTask')} onClick={onAddTask} />
         </div>
         <div className={classes['columns-container']}>{columnsElements}</div>

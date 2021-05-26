@@ -6,7 +6,10 @@ const initialState: TaskStateType = {
   allIds: [],
 };
 
-const taskReducer = (state = initialState, action: ActionTypes): TaskStateType => {
+const taskReducer = (
+  state = initialState,
+  action: ActionTypes
+): TaskStateType => {
   switch (action.type) {
     case types.ADD_TASK: {
       const newTask = {
@@ -21,10 +24,7 @@ const taskReducer = (state = initialState, action: ActionTypes): TaskStateType =
           ...state.byId,
           [newTask.id]: newTask,
         },
-        allIds: [
-          ...state.allIds,
-          newTask.id,
-        ],
+        allIds: [...state.allIds, newTask.id],
       };
     }
     case types.DELETE_TASK: {

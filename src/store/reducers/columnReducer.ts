@@ -25,7 +25,10 @@ const initialState: ColumnStateType = {
   allIds: ['1', '2', '3'],
 };
 
-const columnReducer = (state = initialState, action: ActionTypes): ColumnStateType => {
+const columnReducer = (
+  state = initialState,
+  action: ActionTypes
+): ColumnStateType => {
   switch (action.type) {
     case types.ADD_TASK: {
       return {
@@ -34,10 +37,7 @@ const columnReducer = (state = initialState, action: ActionTypes): ColumnStateTy
           ...state.byId,
           1: {
             ...state.byId['1'],
-            tasks: [
-              ...state.byId['1'].tasks,
-              action.payload.id,
-            ],
+            tasks: [...state.byId['1'].tasks, action.payload.id],
           },
         },
       };
