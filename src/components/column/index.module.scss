@@ -5,15 +5,16 @@
   flex-basis: 300px;
   min-height: 200px;
 
-  h3, input {
+  h3,
+  input {
     margin-top: 5px;
   }
-  
+
   .header {
     position: relative;
     display: flex;
     margin-bottom: 5px;
-    
+
     button {
       position: absolute;
       right: 0px;
@@ -27,4 +28,4 @@
   & .dragging {
     background-color: $light-blue1;
   }
-};  
+}

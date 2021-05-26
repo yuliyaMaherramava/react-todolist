@@ -43,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint": "eslint --no-error-on-unmatched-pattern src/*"
+    "lint": "eslint --no-error-on-unmatched-pattern src/*",
+    "format": "prettier --check ./src"
   },
   "browserslist": {
     "production": [
@@ -70,9 +71,14 @@
     "husky": "6.0.0",
     "lint-staged": "11.0.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "eslint"
+      "eslint --quiet --fix"
     ],
     "*.{json,md,html}": [
       "prettier --write",
