@@ -15,8 +15,8 @@ const App: React.FC = () => {
   const columns = useSelector(columnWithTasksSelector);
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
+  const changeLanguage = (e: ChangeEvent<HTMLInputElement>) => {
+    i18n.changeLanguage(e.currentTarget.value);
   };
 
   const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,8 +54,8 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={classes.app}>
         <div className={classes.language}>
-          <ButtonComponent value="EN" onClick={() => { changeLanguage('en'); }} />
-          <ButtonComponent value="RU" onClick={() => { changeLanguage('ru'); }} />
+          <ButtonComponent value="en" onClick={changeLanguage} />
+          <ButtonComponent value="ru" onClick={changeLanguage} />
         </div>
         <div className={classes['add-container']}>
           <InputComponent value={newTaskText} onChange={onTextChange} placeholder={t('inputs.enterTask')} />
