@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const columns = useSelector(columnWithTasksSelector);
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
     i18n.changeLanguage(e.currentTarget.value);
   };
 

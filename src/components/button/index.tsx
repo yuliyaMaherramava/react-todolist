@@ -1,8 +1,8 @@
-import React, { ChangeEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import Button from '@material-ui/core/Button';
 
 type PropsType = {
-  onClick: (arg0: any) => void,
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void,
   value: string,
 };
 
