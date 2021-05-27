@@ -1,31 +1,31 @@
 @import '../../variables.scss';
 
 .column {
-  padding: 10px;
-  flex-basis: 300px;
-  min-height: 200px;
-
-  h3,
-  input {
-    margin-top: 5px;
-  }
-
-  .header {
-    position: relative;
-    display: flex;
-    margin-bottom: 5px;
-
-    button {
-      position: absolute;
-      right: 0px;
-      top: -10px;
-      margin-top: 8px;
-    }
-  }
-  .task-container {
+    padding: 10px;
+    flex-basis: 300px;
     min-height: 200px;
-  }
-  & .dragging {
-    background-color: $light-blue1;
-  }
+
+    h3,
+    input {
+        margin-top: 5px;
+    }
+
+    .header {
+        position: relative;
+        display: flex;
+        margin-bottom: 5px;
+
+        button {
+            position: absolute;
+            right: 0px;
+            top: -10px;
+            margin-top: 8px;
+        }
+    }
+    .task-container {
+        min-height: 200px;
+    }
+    & .dragging {
+        background-color: $light-blue1;
+    }
 }

@@ -1,8 +1,8 @@
 {
-  "buttons": {
-    "addTask": "Добавить задачу"
-  },
-  "inputs": {
-    "enterTask": "Введите задачу"
-  }
+    "buttons": {
+        "addTask": "Добавить задачу"
+    },
+    "inputs": {
+        "enterTask": "Введите задачу"
+    }
 }
