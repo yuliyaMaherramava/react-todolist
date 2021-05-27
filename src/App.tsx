@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -15,12 +15,8 @@ const App: React.FC = () => {
   const columns = useSelector(columnWithTasksSelector);
   const { t, i18n } = useTranslation();
 
-  const changeLanguageRu = () => {
-    i18n.changeLanguage('ru');
-  };
-
-  const changeLanguageEn = () => {
-    i18n.changeLanguage('en');
+  const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
+    i18n.changeLanguage(e.currentTarget.value);
   };
 
   const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,8 +56,8 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={classes.app}>
         <div className={classes.language}>
-          <ButtonComponent value="EN" onClick={changeLanguageEn} />
-          <ButtonComponent value="RU" onClick={changeLanguageRu} />
+          <ButtonComponent value="en" onClick={changeLanguage} />
+          <ButtonComponent value="ru" onClick={changeLanguage} />
         </div>
         <div className={classes['add-container']}>
           <InputComponent
