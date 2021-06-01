@@ -11,7 +11,7 @@ import { deleteColumn, deleteTask, editColumn } from '../../store/actions';
 
 type PropsType = {
     name: string;
-    tasks: Array<TaskType>;
+    tasks: Array<Task>;
     id: string;
 };
 

@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 import { getTimeFromDate } from '../helpers';
 
-const columnsSelector = (state: StateType): ColumnStateType => state.columns;
-const tasksSelector = (state: StateType): TaskStateType => state.tasks;
+const columnsSelector = (state: StateType): ColumnState => state.columns;
+const tasksSelector = (state: StateType): TaskState => state.tasks;
 
 const sortedColumnsSelector = createSelector(columnsSelector, (columns) =>
     columns.allIds
