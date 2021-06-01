@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +19,8 @@ const App: React.FC = () => {
         i18n.changeLanguage(e.currentTarget.value);
     };
 
-    const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskText(e.target.value);
+    const onTextChange = (text: string) => {
+        setNewTaskText(text);
     };
 
     const onAddTask = () => {

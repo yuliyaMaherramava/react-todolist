@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 type PropsType = {
     value: string;
     placeholder: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    onChange: (text: string) => void;
 };
 
 const InputComponent: React.FC<PropsType> = ({
@@ -19,7 +19,10 @@ const InputComponent: React.FC<PropsType> = ({
         size="medium"
         type="text"
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+            onChange(e.target.value);
+        }}
+        data-testid="textfield"
     />
 );
 

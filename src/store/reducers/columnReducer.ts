@@ -1,7 +1,7 @@
 import { ActionTypes } from '../actionTypes';
 import * as types from '../types';
 
-const initialState: ColumnStateType = {
+export const initialState: ColumnStateType = {
     byId: {
         1: {
             id: '1',
