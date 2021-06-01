@@ -1,7 +1,7 @@
 import { ActionTypes } from '../actionTypes';
 import * as types from '../types';
 
-const initialState: ColumnStateType = {
+const initialState: ColumnState = {
     byId: {
         1: {
             id: '1',
@@ -28,7 +28,7 @@ const initialState: ColumnStateType = {
 const columnReducer = (
     state = initialState,
     action: ActionTypes
-): ColumnStateType => {
+): ColumnState => {
     switch (action.type) {
         case types.ADD_TASK: {
             return {

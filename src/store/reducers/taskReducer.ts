@@ -1,15 +1,12 @@
 import { ActionTypes } from '../actionTypes';
 import * as types from '../types';
 
-const initialState: TaskStateType = {
+const initialState: TaskState = {
     byId: {},
     allIds: [],
 };
 
-const taskReducer = (
-    state = initialState,
-    action: ActionTypes
-): TaskStateType => {
+const taskReducer = (state = initialState, action: ActionTypes): TaskState => {
     switch (action.type) {
         case types.ADD_TASK: {
             const newTask = {
