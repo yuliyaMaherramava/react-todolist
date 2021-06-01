@@ -17,10 +17,13 @@
     "@types/react-redux": "7.1.16",
     "@types/testing-library__jest-dom": "5.9.5",
     "@types/uuid": "8.3.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
     "i18next": "20.2.2",
     "i18next-browser-languagedetector": "6.1.1",
     "i18next-http-backend": "1.2.5",
     "node-sass": "4.12.0",
+    "prettier": "2.3.0",
     "react": "17.0.2",
     "react-beautiful-dnd": "13.1.0",
     "react-dom": "17.0.2",
@@ -40,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint": "eslint src/*"
+    "lint": "eslint --no-error-on-unmatched-pattern src/*",
+    "format": "prettier --check ./src"
   },
   "browserslist": {
     "production": [
@@ -67,9 +71,18 @@
     "husky": "6.0.0",
     "lint-staged": "11.0.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "eslint"
+      "eslint --quiet --fix"
+    ],
+    "*.{json,md,html}": [
+      "prettier --write",
+      "git add"
     ],
     "*.js": "eslint --cache --fix"
   }
