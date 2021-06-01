@@ -1,4 +1,4 @@
-import { getTimeFromDate } from '../helpers';
+import { getTimeFromDate } from '.';
 
 test('function get Time From Data ', () => {
     const date = new Date(

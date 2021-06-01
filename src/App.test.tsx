@@ -20,23 +20,25 @@ jest.mock('react-i18next', () => ({
     useTranslation: () => ({ t: (key: unknown) => key }),
 }));
 
-it('renders', () => {
-    const component = render(
-        <Provider store={store}>
-            <App />
-        </Provider>
-    );
-    const textField = component.getByRole('textbox') as HTMLInputElement;
-    const button = component.getByText('buttons.addTask');
+describe('App', () => {
+    it('should add a task to state', () => {
+        const component = render(
+            <Provider store={store}>
+                <App />
+            </Provider>
+        );
+        const textField = component.getByRole('textbox') as HTMLInputElement;
+        const button = component.getByText('buttons.addTask');
 
-    fireEvent.change(textField, { target: { value: 'TaskName' } });
-    fireEvent.click(button);
+        fireEvent.change(textField, { target: { value: 'TaskName' } });
+        fireEvent.click(button);
 
-    const actions = store.getActions();
-    const expectedPayload = {
-        type: 'ADD_TASK',
-        payload: { name: 'TaskName' },
-    };
-    expect(actions[0].type).toEqual(expectedPayload.type);
-    expect(actions[0].payload.name).toEqual(expectedPayload.payload.name);
+        const actions = store.getActions();
+        const expectedPayload = {
+            type: 'ADD_TASK',
+            payload: { name: 'TaskName' },
+        };
+        expect(actions[0].type).toEqual(expectedPayload.type);
+        expect(actions[0].payload.name).toEqual(expectedPayload.payload.name);
+    });
 });

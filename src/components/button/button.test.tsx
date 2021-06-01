@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import ButtonComponent from '../components/button';
+import ButtonComponent from '.';
 
 describe('button', () => {
     const handleOnClick = jest.fn();
@@ -19,6 +19,6 @@ describe('button', () => {
         );
         const button = component.getByRole('button') as HTMLButtonElement;
         fireEvent.click(button);
-        expect(handleOnClick.mock.calls.length).toEqual(1);
+        expect(handleOnClick).toBeCalled();
     });
 });

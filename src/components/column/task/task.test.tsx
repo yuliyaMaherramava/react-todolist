@@ -4,8 +4,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import configureStore from 'redux-mock-store';
 import { render } from '@testing-library/react';
 import { Middleware, Dispatch, AnyAction } from 'redux';
-import { initialState } from '../store/reducers/taskReducer';
-import Task from '../components/column/task';
+import { initialState } from '../../../store/reducers/taskReducer';
+import Task from '.';
 
 const middlewares:
     | Middleware<Record<string, unknown>, unknown, Dispatch<AnyAction>>[]
@@ -14,8 +14,8 @@ const mockStore = configureStore(middlewares);
 const mockInitialState = { initialState };
 const store = mockStore(mockInitialState);
 
-describe('test', () => {
-    it('renders correctly ', () => {
+describe('Task', () => {
+    it('should render component with correct name from prop', () => {
         const component = render(
             <Provider store={store}>
                 <DragDropContext onDragEnd={() => ({})}>

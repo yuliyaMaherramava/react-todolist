@@ -4,8 +4,8 @@ import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Middleware, Dispatch, AnyAction } from 'redux';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { initialState } from '../store/reducers/columnReducer';
-import Column from '../components/column';
+import { initialState } from '../../store/reducers/columnReducer';
+import Column from '.';
 
 const middlewares:
     | Middleware<Record<string, unknown>, unknown, Dispatch<AnyAction>>[]
@@ -15,7 +15,7 @@ const mockInitialState = { initialState };
 const store = mockStore(mockInitialState);
 
 describe('column', () => {
-    it('renders with correct name and tasks ', () => {
+    it('should render with correct name and tasks ', () => {
         const tasks = [
             {
                 id: '1',
