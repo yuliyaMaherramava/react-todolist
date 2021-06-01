@@ -22,7 +22,6 @@ const InputComponent: React.FC<PropsType> = ({
         onChange={(e) => {
             onChange(e.target.value);
         }}
-        data-testid="textfield"
     />
 );
 
