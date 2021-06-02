@@ -39,6 +39,7 @@ describe('Task', () => {
             </Provider>
         );
         const taskText = component.container.querySelector('p');
+        expect(taskText).toBeTruthy();
         expect(taskText.textContent).toBe('task1');
     });
 });
