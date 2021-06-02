@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 import Button from '@material-ui/core/Button';
 
 type PropsType = {
-    onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
     value: string;
 };
 
