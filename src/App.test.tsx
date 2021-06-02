@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Middleware, Dispatch, AnyAction } from 'redux';
 import { Provider } from 'react-redux';
@@ -21,7 +21,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe('App', () => {
-    it('should add a task to state', () => {
+    it('should add a task to state', async () => {
         const component = render(
             <Provider store={store}>
                 <App />
@@ -30,8 +30,12 @@ describe('App', () => {
         const textField = component.getByRole('textbox') as HTMLInputElement;
         const button = component.getByText('buttons.addTask');
 
-        fireEvent.change(textField, { target: { value: 'TaskName' } });
-        fireEvent.click(button);
+        await waitFor(() => {
+            fireEvent.change(textField, { target: { value: 'TaskName' } });
+        });
+        await waitFor(() => {
+            fireEvent.click(button);
+        });
 
         const actions = store.getActions();
         const expectedPayload = {
