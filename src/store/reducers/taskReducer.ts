@@ -1,7 +1,7 @@
 import { ActionTypes } from '../actionTypes';
 import * as types from '../types';
 
-const initialState: TaskState = {
+export const initialState: TaskState = {
     byId: {},
     allIds: [],
 };

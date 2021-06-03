@@ -50,6 +50,7 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
                     onDoubleClick={toggleEditMode}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
+                    data-testid="task"
                 >
                     {!editMode ? (
                         <p>{name}</p>
