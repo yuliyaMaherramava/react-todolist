@@ -15,6 +15,7 @@ type PropsType = {
 
 const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     const [editMode, setEditMode] = useState(false);
+    const [errorMode, setErrorMode] = useState(false);
     const [taskText, setTaskText] = useState<string>(name);
     const dispatch = useDispatch();
 
@@ -31,8 +32,13 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     };
 
     const onTaskBlur = () => {
-        toggleEditMode();
-        updateTask();
+        if (taskText) {
+            setErrorMode(false);
+            toggleEditMode();
+            updateTask();
+        } else {
+            setErrorMode(true);
+        }
     };
 
     const onDeleteTask = () => {
@@ -60,6 +66,8 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
                             onBlur={onTaskBlur}
                             value={taskText}
                             placeholder={taskText}
+                            required
+                            className={`${errorMode ? classes.error : null}`}
                         />
                     )}
                     <IconButton

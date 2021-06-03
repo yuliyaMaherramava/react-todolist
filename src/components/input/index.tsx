@@ -8,12 +8,14 @@ type PropsType = {
     placeholder: string;
     error: boolean | undefined;
     onChange: (e: ChangeEvent) => void;
+    onBlur: (e: ChangeEvent) => void;
 };
 
 const InputComponent: React.FC<PropsType> = ({
     value,
     name,
     onChange,
+    onBlur,
     placeholder,
     error,
 }) => (
@@ -26,6 +28,7 @@ const InputComponent: React.FC<PropsType> = ({
         type="text"
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         error={error}
     />
 );

@@ -16,12 +16,28 @@ const App: React.FC = () => {
     const columns = useSelector(columnWithTasksSelector);
     const { t, i18n } = useTranslation();
 
-    const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
-        i18n.changeLanguage(e.currentTarget.value);
-    };
+    const validationSchema = yup.object({
+        taskText: yup.string().trim().required(),
+    });
 
     const onAddTask = (text: string) => {
         dispatch(addTask(text));
+    };
+
+    const formik = useFormik({
+        initialValues: {
+            taskText: '',
+        },
+        validationSchema,
+        onSubmit: (values, { resetForm }) => {
+            const text = JSON.stringify(values.taskText).replace(/"/g, '');
+            onAddTask(text);
+            resetForm();
+        },
+    });
+
+    const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
+        i18n.changeLanguage(e.currentTarget.value);
     };
 
     const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
@@ -49,20 +65,6 @@ const App: React.FC = () => {
         />
     ));
 
-    const validationSchema = yup.object({
-        taskText: yup.string().trim().required(),
-    });
-    const formik = useFormik({
-        initialValues: {
-            taskText: '',
-        },
-        validationSchema,
-        onSubmit: (values, { resetForm }) => {
-            const text = JSON.stringify(values.taskText).replace(/"/g, '');
-            onAddTask(text);
-            resetForm();
-        },
-    });
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className={classes.app}>
@@ -80,6 +82,7 @@ const App: React.FC = () => {
                         name="taskText"
                         value={formik.values.taskText}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         error={
                             formik.touched.taskText &&
                             Boolean(formik.errors.taskText)
