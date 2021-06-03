@@ -1,15 +1,11 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { Middleware, Dispatch, AnyAction } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App';
 import { initialState } from './store/reducers/columnReducer';
 
-const middlewares:
-    | Middleware<Record<string, unknown>, unknown, Dispatch<AnyAction>>[]
-    | undefined = [];
-const mockStore = configureStore(middlewares);
+const mockStore = configureStore();
 const mockInitialState = {
     columns: initialState,
     tasks: { byId: {}, allIds: [] },

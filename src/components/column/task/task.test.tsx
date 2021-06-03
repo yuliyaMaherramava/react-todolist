@@ -3,14 +3,10 @@ import { Provider } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import configureStore from 'redux-mock-store';
 import { render } from '@testing-library/react';
-import { Middleware, Dispatch, AnyAction } from 'redux';
 import { initialState } from '../../../store/reducers/taskReducer';
 import Task from '.';
 
-const middlewares:
-    | Middleware<Record<string, unknown>, unknown, Dispatch<AnyAction>>[]
-    | undefined = [];
-const mockStore = configureStore(middlewares);
+const mockStore = configureStore();
 const mockInitialState = { initialState };
 const store = mockStore(mockInitialState);
 
@@ -39,6 +35,7 @@ describe('Task', () => {
             </Provider>
         );
         const taskText = component.container.querySelector('p');
+        expect(taskText).toBeTruthy();
         expect(taskText.textContent).toBe('task1');
     });
 });

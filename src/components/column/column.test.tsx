@@ -1,16 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, RenderResult } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { Middleware, Dispatch, AnyAction } from 'redux';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { initialState } from '../../store/reducers/columnReducer';
 import Column from '.';
 
-const middlewares:
-    | Middleware<Record<string, unknown>, unknown, Dispatch<AnyAction>>[]
-    | undefined = [];
-const mockStore = configureStore(middlewares);
+const mockStore = configureStore();
 const mockInitialState = { initialState };
 const store = mockStore(mockInitialState);
 
@@ -23,28 +19,29 @@ describe('column', () => {
             createdAt: new Date(),
         },
     ];
-    let component: RenderResult<
-        typeof import('@testing-library/dom/types/queries'),
-        HTMLElement
-    >;
 
-    beforeEach(() => {
-        component = render(
+    const renderComponent = () => {
+        const component = render(
             <Provider store={store}>
                 <DragDropContext onDragEnd={() => ({})}>
                     <Column name="to do" id="10" tasks={tasks} />
                 </DragDropContext>
             </Provider>
         );
-    });
+        return component;
+    };
 
     it('should render with correct name  ', () => {
+        const component = renderComponent();
         const columnText = component.container.querySelector('h3');
+        expect(columnText).toBeTruthy();
         expect(columnText.textContent).toBe('to do');
     });
 
     it('should render with correct tasks ', () => {
+        const component = renderComponent();
         const taskText = component.getByTestId('task').querySelector('p');
+        expect(taskText).toBeTruthy();
         expect(taskText.textContent).toBe(tasks[0].name);
     });
 });
