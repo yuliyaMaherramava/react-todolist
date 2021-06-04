@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -36,9 +36,12 @@ const App: React.FC = () => {
         },
     });
 
-    const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
-        i18n.changeLanguage(e.currentTarget.value);
-    };
+    const changeLanguage = useCallback(
+        (e: MouseEvent<HTMLButtonElement>) => {
+            i18n.changeLanguage(e.currentTarget.value);
+        },
+        [i18n]
+    );
 
     const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
         if (!destination) {

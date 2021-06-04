@@ -44,7 +44,6 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     const onDeleteTask = () => {
         dispatch(deleteTask(id, columnId));
     };
-
     return (
         <Draggable draggableId={id} index={index}>
             {(provided, snapshot) => (
@@ -83,4 +82,4 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     );
 };
 
-export default Task;
+export default React.memo(Task);

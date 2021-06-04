@@ -18,4 +18,4 @@ const ButtonComponent: React.FC<PropsType> = ({ onClick, value }) => (
     </Button>
 );
 
-export default ButtonComponent;
+export default React.memo(ButtonComponent);
