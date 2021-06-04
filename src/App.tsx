@@ -11,14 +11,14 @@ import Column from './components/column';
 import { columnWithTasksSelector } from './store/selectors';
 import { addTask, dropTask } from './store/actions';
 
+const validationSchema = yup.object({
+    taskText: yup.string().trim().required(),
+});
+
 const App: React.FC = () => {
     const dispatch = useDispatch();
     const columns = useSelector(columnWithTasksSelector);
     const { t, i18n } = useTranslation();
-
-    const validationSchema = yup.object({
-        taskText: yup.string().trim().required(),
-    });
 
     const onAddTask = (text: string) => {
         dispatch(addTask(text));
