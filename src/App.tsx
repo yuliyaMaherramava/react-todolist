@@ -1,7 +1,9 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import classes from './App.module.scss';
 import InputComponent from './components/input';
 import ButtonComponent from './components/button';
@@ -10,22 +12,31 @@ import { columnWithTasksSelector } from './store/selectors';
 import { addTask, dropTask } from './store/actions';
 
 const App: React.FC = () => {
-    const [newTaskText, setNewTaskText] = useState<string>('');
     const dispatch = useDispatch();
     const columns = useSelector(columnWithTasksSelector);
     const { t, i18n } = useTranslation();
 
+    const onAddTask = (text: string) => {
+        dispatch(addTask(text));
+    };
+
+    const validationSchema = yup.object({
+        taskText: yup.string().trim().required(i18n.t('inputs.error')),
+    });
+    const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
+        useFormik({
+            initialValues: {
+                taskText: '',
+            },
+            validationSchema,
+            onSubmit: (formValues, { resetForm }) => {
+                onAddTask(formValues.taskText);
+                resetForm();
+            },
+        });
+
     const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
         i18n.changeLanguage(e.currentTarget.value);
-    };
-
-    const onTextChange = (text: string) => {
-        setNewTaskText(text);
-    };
-
-    const onAddTask = () => {
-        dispatch(addTask(newTaskText));
-        setNewTaskText('');
     };
 
     const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
@@ -52,6 +63,7 @@ const App: React.FC = () => {
             tasks={column.tasks}
         />
     ));
+
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <div className={classes.app}>
@@ -59,17 +71,22 @@ const App: React.FC = () => {
                     <ButtonComponent value="en" onClick={changeLanguage} />
                     <ButtonComponent value="ru" onClick={changeLanguage} />
                 </div>
-                <div className={classes['add-container']}>
+                <form
+                    onSubmit={handleSubmit}
+                    className={classes['add-container']}
+                >
                     <InputComponent
-                        value={newTaskText}
-                        onChange={onTextChange}
                         placeholder={t('inputs.enterTask')}
+                        id="taskText"
+                        name="taskText"
+                        value={values.taskText}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={touched.taskText && Boolean(errors.taskText)}
+                        helperText={errors.taskText}
                     />
-                    <ButtonComponent
-                        value={t('buttons.addTask')}
-                        onClick={onAddTask}
-                    />
-                </div>
+                    <ButtonComponent value={t('buttons.addTask')} />
+                </form>
                 <div className={classes['columns-container']}>
                     {columnsElements}
                 </div>

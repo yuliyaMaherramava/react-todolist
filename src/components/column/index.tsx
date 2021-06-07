@@ -17,6 +17,7 @@ type PropsType = {
 
 const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     const [editMode, setEditMode] = useState(false);
+    const [errorMode, setErrorMode] = useState(false);
     const [columnText, setColumnText] = useState<string>(name);
     const dispatch = useDispatch();
 
@@ -33,8 +34,13 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     };
 
     const onColumnBlur = () => {
-        toggleEditMode();
-        updateColumn();
+        if (columnText) {
+            setErrorMode(false);
+            toggleEditMode();
+            updateColumn();
+        } else {
+            setErrorMode(true);
+        }
     };
 
     const onDeleteColumn = () => {
@@ -68,6 +74,7 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
                         onBlur={onColumnBlur}
                         value={columnText}
                         placeholder={columnText}
+                        error={errorMode}
                     />
                 )}
                 <IconButton
