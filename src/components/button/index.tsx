@@ -4,11 +4,12 @@ import Button from '@material-ui/core/Button';
 type PropsType = {
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
     value: string;
+    type: 'button' | 'reset' | 'submit';
 };
 
-const ButtonComponent: React.FC<PropsType> = ({ onClick, value }) => (
+const ButtonComponent: React.FC<PropsType> = ({ onClick, value, type }) => (
     <Button
-        type="submit"
+        type={type}
         onClick={onClick}
         variant="contained"
         color="primary"

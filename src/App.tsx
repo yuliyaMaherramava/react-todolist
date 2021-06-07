@@ -72,8 +72,16 @@ const App: React.FC = () => {
         <DragDropContext onDragEnd={onDragEnd}>
             <div className={classes.app}>
                 <div className={classes.language}>
-                    <ButtonComponent value="en" onClick={changeLanguage} />
-                    <ButtonComponent value="ru" onClick={changeLanguage} />
+                    <ButtonComponent
+                        value="en"
+                        type="button"
+                        onClick={changeLanguage}
+                    />
+                    <ButtonComponent
+                        value="ru"
+                        type="button"
+                        onClick={changeLanguage}
+                    />
                 </div>
                 <form
                     onSubmit={formik.handleSubmit}
@@ -91,7 +99,10 @@ const App: React.FC = () => {
                             Boolean(formik.errors.taskText)
                         }
                     />
-                    <ButtonComponent value={t('buttons.addTask')} />
+                    <ButtonComponent
+                        type="submit"
+                        value={t('buttons.addTask')}
+                    />
                 </form>
                 <div className={classes['columns-container']}>
                     {columnsElements}
