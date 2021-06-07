@@ -3,6 +3,7 @@
         "addTask": "Add a task"
     },
     "inputs": {
-        "enterTask": "Enter a task"
+        "enterTask": "Enter a task",
+        "error": "Required field"
     }
 }

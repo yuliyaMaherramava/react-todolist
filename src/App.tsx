@@ -11,10 +11,6 @@ import Column from './components/column';
 import { columnWithTasksSelector } from './store/selectors';
 import { addTask, dropTask } from './store/actions';
 
-const validationSchema = yup.object({
-    taskText: yup.string().trim().required(),
-});
-
 const App: React.FC = () => {
     const dispatch = useDispatch();
     const columns = useSelector(columnWithTasksSelector);
@@ -24,17 +20,20 @@ const App: React.FC = () => {
         dispatch(addTask(text));
     };
 
-    const formik = useFormik({
-        initialValues: {
-            taskText: '',
-        },
-        validationSchema,
-        onSubmit: (values, { resetForm }) => {
-            const text = JSON.stringify(values.taskText).replace(/"/g, '');
-            onAddTask(text);
-            resetForm();
-        },
+    const validationSchema = yup.object({
+        taskText: yup.string().trim().required(i18n.t('inputs.error')),
     });
+    const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
+        useFormik({
+            initialValues: {
+                taskText: '',
+            },
+            validationSchema,
+            onSubmit: (formValues, { resetForm }) => {
+                onAddTask(formValues.taskText);
+                resetForm();
+            },
+        });
 
     const changeLanguage = useCallback(
         (e: MouseEvent<HTMLButtonElement>) => {
@@ -84,20 +83,18 @@ const App: React.FC = () => {
                     />
                 </div>
                 <form
-                    onSubmit={formik.handleSubmit}
+                    onSubmit={handleSubmit}
                     className={classes['add-container']}
                 >
                     <InputComponent
                         placeholder={t('inputs.enterTask')}
                         id="taskText"
                         name="taskText"
-                        value={formik.values.taskText}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={
-                            formik.touched.taskText &&
-                            Boolean(formik.errors.taskText)
-                        }
+                        value={values.taskText}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={touched.taskText && Boolean(errors.taskText)}
+                        helperText={errors.taskText}
                     />
                     <ButtonComponent
                         type="submit"
