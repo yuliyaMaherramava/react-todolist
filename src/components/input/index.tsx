@@ -1,23 +1,14 @@
-import React, { ChangeEvent } from 'react';
-import { TextField } from '@material-ui/core';
+import React from 'react';
+import { TextField, TextFieldProps } from '@material-ui/core';
 
-type PropsType = {
-    id: string;
-    name: string;
-    value: string;
-    placeholder: string;
-    error: boolean | undefined;
-    onChange: (e: ChangeEvent) => void;
-    onBlur: (e: ChangeEvent) => void;
-};
-
-const InputComponent: React.FC<PropsType> = ({
+const InputComponent: React.FC<TextFieldProps> = ({
     value,
     name,
     onChange,
     onBlur,
     placeholder,
     error,
+    helperText,
 }) => (
     <TextField
         id="outlined-basic"
@@ -30,6 +21,7 @@ const InputComponent: React.FC<PropsType> = ({
         onChange={onChange}
         onBlur={onBlur}
         error={error}
+        helperText={helperText}
     />
 );
 
