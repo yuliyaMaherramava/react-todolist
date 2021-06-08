@@ -34,3 +34,9 @@ interface StateType {
     columns: ColumnState;
     tasks: TaskState;
 }
+
+interface DropTaskPayload {
+    destionationId: string;
+    sourceId: string;
+    draggableId: string;
+}

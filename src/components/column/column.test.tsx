@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { initialState } from '../../store/reducers/columnReducer';
+import { initialState } from '../../store/columns/columnReducer';
 import Column from '.';
 
 const mockStore = configureStore();

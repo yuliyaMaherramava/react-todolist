@@ -4,7 +4,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import classes from './index.module.scss';
-import { deleteTask, editTask } from '../../../store/actions';
+import { actions } from '../../../store/actions';
 
 type PropsType = {
     name: string;
@@ -28,7 +28,7 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     };
 
     const updateTask = () => {
-        dispatch(editTask(id, taskText));
+        dispatch(actions.taskActions.editTask(id, taskText));
     };
 
     const onTaskBlur = () => {
@@ -42,7 +42,7 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     };
 
     const onDeleteTask = () => {
-        dispatch(deleteTask(id, columnId));
+        dispatch(actions.taskActions.deleteTask(id, columnId));
     };
     return (
         <Draggable draggableId={id} index={index}>

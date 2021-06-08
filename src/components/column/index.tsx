@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
 import classes from './index.module.scss';
 import Task from './task';
-import { deleteColumn, deleteTask, editColumn } from '../../store/actions';
+import { actions } from '../../store/actions';
 
 type PropsType = {
     name: string;
@@ -30,7 +30,7 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     };
 
     const updateColumn = () => {
-        dispatch(editColumn(id, columnText));
+        dispatch(actions.columnsActions.editColumn(id, columnText));
     };
 
     const onColumnBlur = () => {
@@ -45,9 +45,9 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
 
     const onDeleteColumn = () => {
         tasks.forEach((task) => {
-            dispatch(deleteTask(task.id, id));
+            dispatch(actions.taskActions.deleteTask(task.id, id));
         });
-        dispatch(deleteColumn(id));
+        dispatch(actions.columnsActions.deleteColumn(id));
     };
 
     const taskElements = tasks.map((task, index) => (

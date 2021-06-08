@@ -3,7 +3,7 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import App from './App';
-import { initialState } from './store/reducers/columnReducer';
+import { initialState } from './store/columns/columnReducer';
 
 const mockStore = configureStore();
 const mockInitialState = {
@@ -35,7 +35,7 @@ describe('App', () => {
 
         const actions = store.getActions();
         const expectedPayload = {
-            type: 'ADD_TASK',
+            type: 'tasks/ADD',
             payload: { name: 'TaskName' },
         };
         expect(actions[0].type).toEqual(expectedPayload.type);

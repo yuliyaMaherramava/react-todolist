@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import configureStore from 'redux-mock-store';
 import { render } from '@testing-library/react';
-import { initialState } from '../../../store/reducers/taskReducer';
+import { initialState } from '../../../store/tasks/taskReducer';
 import Task from '.';
 
 const mockStore = configureStore();
