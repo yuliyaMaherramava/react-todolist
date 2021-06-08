@@ -21,7 +21,7 @@ const App: React.FC = () => {
     };
 
     const validationSchema = yup.object({
-        taskText: yup.string().trim().required(i18n.t('inputs.error')),
+        taskText: yup.string().trim().required(t('inputs.error')),
     });
     const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
         useFormik({
