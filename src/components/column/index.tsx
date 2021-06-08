@@ -59,7 +59,6 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
             index={index}
         />
     ));
-
     return (
         <Paper elevation={3} className={classes.column}>
             <div className={classes.header} onDoubleClick={toggleEditMode}>
@@ -103,4 +102,4 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     );
 };
 
-export default Column;
+export default React.memo(Column);

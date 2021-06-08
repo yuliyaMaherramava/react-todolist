@@ -25,4 +25,4 @@ const InputComponent: React.FC<TextFieldProps> = ({
     />
 );
 
-export default InputComponent;
+export default React.memo(InputComponent);

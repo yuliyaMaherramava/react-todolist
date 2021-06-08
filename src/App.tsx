@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,7 @@ const App: React.FC = () => {
     };
 
     const validationSchema = yup.object({
-        taskText: yup.string().trim().required(i18n.t('inputs.error')),
+        taskText: yup.string().trim().required(t('inputs.error')),
     });
     const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
         useFormik({
@@ -35,9 +35,12 @@ const App: React.FC = () => {
             },
         });
 
-    const changeLanguage = (e: MouseEvent<HTMLButtonElement>) => {
-        i18n.changeLanguage(e.currentTarget.value);
-    };
+    const changeLanguage = useCallback(
+        (e: MouseEvent<HTMLButtonElement>) => {
+            i18n.changeLanguage(e.currentTarget.value);
+        },
+        [i18n]
+    );
 
     const onDragEnd = ({ destination, source, draggableId }: DropResult) => {
         if (!destination) {
@@ -68,8 +71,16 @@ const App: React.FC = () => {
         <DragDropContext onDragEnd={onDragEnd}>
             <div className={classes.app}>
                 <div className={classes.language}>
-                    <ButtonComponent value="en" onClick={changeLanguage} />
-                    <ButtonComponent value="ru" onClick={changeLanguage} />
+                    <ButtonComponent
+                        value="en"
+                        type="button"
+                        onClick={changeLanguage}
+                    />
+                    <ButtonComponent
+                        value="ru"
+                        type="button"
+                        onClick={changeLanguage}
+                    />
                 </div>
                 <form
                     onSubmit={handleSubmit}
@@ -85,7 +96,10 @@ const App: React.FC = () => {
                         error={touched.taskText && Boolean(errors.taskText)}
                         helperText={errors.taskText}
                     />
-                    <ButtonComponent value={t('buttons.addTask')} />
+                    <ButtonComponent
+                        type="submit"
+                        value={t('buttons.addTask')}
+                    />
                 </form>
                 <div className={classes['columns-container']}>
                     {columnsElements}
