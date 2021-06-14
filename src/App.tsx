@@ -11,6 +11,10 @@ import Column from './components/column';
 import { columnWithTasksSelector } from './store/selectors';
 import { addTask, dropTask } from './store/actions';
 
+const validationSchema = yup.object({
+    taskText: yup.string().trim().required('inputs.error'),
+});
+
 const App: React.FC = () => {
     const dispatch = useDispatch();
     const columns = useSelector(columnWithTasksSelector);
@@ -20,9 +24,6 @@ const App: React.FC = () => {
         dispatch(addTask(text));
     };
 
-    const validationSchema = yup.object({
-        taskText: yup.string().trim().required(t('inputs.error')),
-    });
     const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
         useFormik({
             initialValues: {
@@ -94,7 +95,7 @@ const App: React.FC = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={touched.taskText && Boolean(errors.taskText)}
-                        helperText={errors.taskText}
+                        helperText={t(`${errors.taskText || ''}`)}
                     />
                     <ButtonComponent
                         type="submit"
