@@ -1,7 +1,7 @@
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, combineReducers } from 'redux';
-import taskReducer from './reducers/taskReducer';
-import columnReducer from './reducers/columnReducer';
+import taskReducer from './tasks/taskReducer';
+import columnReducer from './columns/columnReducer';
 
 function saveToLocalStorage(state: StateType) {
     try {

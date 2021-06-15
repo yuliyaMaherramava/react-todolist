@@ -2,8 +2,10 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { getType } from 'typesafe-actions';
 import App from './App';
-import { initialState } from './store/reducers/columnReducer';
+import { initialState } from './store/columns/columnReducer';
+import { actions } from './store/actions';
 
 const mockStore = configureStore();
 const mockInitialState = {
@@ -33,12 +35,14 @@ describe('App', () => {
             fireEvent.click(button);
         });
 
-        const actions = store.getActions();
+        const storeActions = store.getActions();
         const expectedPayload = {
-            type: 'ADD_TASK',
+            type: getType(actions.taskActions.addTask),
             payload: { name: 'TaskName' },
         };
-        expect(actions[0].type).toEqual(expectedPayload.type);
-        expect(actions[0].payload.name).toEqual(expectedPayload.payload.name);
+        expect(storeActions[0].type).toEqual(expectedPayload.type);
+        expect(storeActions[0].payload.name).toEqual(
+            expectedPayload.payload.name
+        );
     });
 });
