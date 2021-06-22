@@ -27,7 +27,7 @@ interface ColumnState {
 
 interface TaskState {
     loading: boolean;
-    error?: Error;
+    error: Error | null;
     byId: TaskById;
     allIds: Array<string>;
 }

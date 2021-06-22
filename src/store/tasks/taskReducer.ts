@@ -5,7 +5,7 @@ import { actions, RootAction } from '../actions';
 
 export const initialState: TaskState = {
     loading: false,
-    error: undefined,
+    error: null,
     byId: {},
     allIds: [],
 };
@@ -17,7 +17,7 @@ const taskReducerRequest = createReducer<TaskState, RootAction>(initialState)
             return {
                 ...state,
                 loading: true,
-                error: undefined,
+                error: null,
             };
         }
     )
@@ -27,12 +27,102 @@ const taskReducerRequest = createReducer<TaskState, RootAction>(initialState)
             return {
                 ...state,
                 loading: false,
-                error: undefined,
+                error: null,
             };
         }
     )
     .handleAction(
         actions.taskActions.getTaskActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.createTaskActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.createTaskActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.createTaskActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.updateTaskActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.updateTaskActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.updateTaskActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.deleteTaskActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.deleteTaskActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.deleteTaskActions.failure,
         (state, action) => {
             return {
                 ...state,
@@ -109,9 +199,10 @@ const taskAllIdsReducer = createReducer<TaskState['allIds'], RootAction>(
         actions.taskActions.getTaskActions.success,
         (state, { payload }) => {
             const newTasksIds = payload.map((task) => task.id);
+            const setTaskIds = Array.from(new Set(newTasksIds));
             return {
                 ...state,
-                ...newTasksIds,
+                ...setTaskIds,
             };
         }
     )
@@ -129,7 +220,7 @@ const taskReducer: Reducer<TaskState, RootAction> = combineReducers({
     byId: taskByIdReducer,
     allIds: taskAllIdsReducer,
     loading: (state: boolean = initialState.loading) => state,
-    error: (state: Error | undefined = initialState.error) => state,
+    error: (state: Error | null = initialState.error) => state,
 });
 
 const reducer = reduceReducers(initialState, taskReducer, taskReducerRequest);
