@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import classes from './index.module.scss';
 import Task from './task';
 import { actions } from '../../store/actions';
+import { deleteTasks, updateTasks } from '../../store/tasks/taskActions';
+import { deleteColumns } from '../../store/columns/columnActions';
 
 type PropsType = {
     name: string;
@@ -30,7 +32,8 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     };
 
     const updateColumn = () => {
-        dispatch(actions.columnsActions.editColumn(id, columnText));
+        // dispatch(actions.columnsActions.editColumn(id, columnText));
+        dispatch(updateTasks(id, columnText));
     };
 
     const onColumnBlur = () => {
@@ -45,9 +48,10 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
 
     const onDeleteColumn = () => {
         tasks.forEach((task) => {
-            dispatch(actions.taskActions.deleteTask(task.id, id));
+            dispatch(deleteTasks(task.id, id));
         });
-        dispatch(actions.columnsActions.deleteColumn(id));
+        // dispatch(actions.columnsActions.deleteColumn(id));
+        dispatch(deleteColumns(id));
     };
 
     const taskElements = tasks.map((task, index) => (

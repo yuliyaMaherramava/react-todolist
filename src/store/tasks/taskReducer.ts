@@ -130,6 +130,36 @@ const taskReducerRequest = createReducer<TaskState, RootAction>(initialState)
                 error: action.payload,
             };
         }
+    )
+    .handleAction(
+        actions.taskActions.dropTaskActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.dropTaskActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.dropTaskActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
     );
 
 const taskByIdReducer = createReducer<TaskById, RootAction>(initialState.byId)
@@ -144,49 +174,55 @@ const taskByIdReducer = createReducer<TaskById, RootAction>(initialState.byId)
         }
     )
     .handleAction(
-        actions.taskActions.addTask,
-        (state, { payload: { id, name } }) => {
+        actions.taskActions.createTaskActions.success,
+        (
+            state,
+            { payload: { id, name, columnId, order, createdAt, updatedAt } }
+        ) => {
             return {
                 ...state,
                 [id]: {
                     id,
                     name,
-                    columnId: '1',
-                    createdAt: new Date(),
+                    order,
+                    columnId,
+                    createdAt,
+                    updatedAt,
                 },
             };
         }
     )
     .handleAction(
-        actions.taskActions.deleteTask,
-        (state, { payload: { taskId } }) => {
+        actions.taskActions.deleteTaskActions.success,
+        (state, { payload: { id } }) => {
             const tasksWithoutDeleted = { ...state };
-            delete tasksWithoutDeleted[taskId];
+            delete tasksWithoutDeleted[id];
             return {
                 ...tasksWithoutDeleted,
             };
         }
     )
     .handleAction(
-        actions.taskActions.editTask,
-        (state, { payload: { id, text } }) => {
+        actions.taskActions.updateTaskActions.success,
+        (state, { payload: { id, taskText } }) => {
             return {
                 ...state,
                 [id]: {
                     ...state[id],
-                    name: text,
+                    name: taskText,
                 },
             };
         }
     )
     .handleAction(
-        actions.taskActions.dropTask,
-        (state, { payload: { draggableId, destionationId } }) => {
+        actions.taskActions.dropTaskActions.success,
+        (state, { payload: { id, destinationId, order } }) => {
             return {
                 ...state,
-                [draggableId]: {
-                    ...state[draggableId],
-                    columnId: destionationId,
+                [id]: {
+                    ...state[id],
+                    columnId: destinationId,
+                    order,
                 },
             };
         }
@@ -206,13 +242,16 @@ const taskAllIdsReducer = createReducer<TaskState['allIds'], RootAction>(
             };
         }
     )
-    .handleAction(actions.taskActions.addTask, (state, { payload: { id } }) => {
-        return [...state, id];
-    })
     .handleAction(
-        actions.taskActions.deleteTask,
-        (state, { payload: { taskId } }) => {
-            return state.filter((id) => id !== taskId);
+        actions.taskActions.createTaskActions.success,
+        (state, { payload: { id } }) => {
+            return [...state, id];
+        }
+    )
+    .handleAction(
+        actions.taskActions.deleteTaskActions.success,
+        (state, { payload: { id } }) => {
+            return state.filter((arrId) => arrId !== id);
         }
     );
 

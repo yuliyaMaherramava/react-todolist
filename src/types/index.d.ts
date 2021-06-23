@@ -1,8 +1,11 @@
 interface Task {
     id: string;
     name: string;
+    order: number;
     columnId: string;
     createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
 }
 
 interface Column {
@@ -38,7 +41,22 @@ interface StateType {
 }
 
 interface DropTaskPayload {
-    destionationId: string;
+    id: string;
+    destinationId: string;
     sourceId: string;
-    draggableId: string;
+    order: number;
+}
+interface DeleteTaskPayload {
+    id: string;
+    columnId: string;
+}
+
+interface UpdateTaskPayload {
+    id: string;
+    taskText: string;
+}
+
+interface UpdateColumnPayload {
+    id: string;
+    text: string;
 }

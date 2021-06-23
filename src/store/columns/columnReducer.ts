@@ -1,3 +1,4 @@
+import reduceReducers from 'reduce-reducers';
 import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
 import { actions, RootAction } from '../actions';
@@ -25,52 +26,161 @@ export const initialState: ColumnState = {
     },
     allIds: ['1', '2', '3'],
 };
+
+const columnReducerRequest = createReducer<ColumnState, RootAction>(
+    initialState
+)
+    .handleAction(
+        actions.columnsActions.getColumnActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.getColumnActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.getColumnActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.updateColumnActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.updateColumnActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.updateColumnActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.request,
+        (state, action) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.success,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    );
+
 const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
     initialState.byId
 )
-    .handleAction(actions.taskActions.addTask, (state, { payload: { id } }) => {
-        return {
-            ...state,
-            1: {
-                ...state['1'],
-                tasks: [...state['1'].tasks, id],
-            },
-        };
-    })
     .handleAction(
-        actions.taskActions.deleteTask,
-        (state, { payload: { taskId, columnId } }) => {
+        actions.columnsActions.getColumnActions.success,
+        (state, { payload }) => {
+            const newById = { ...state };
+            payload.forEach((column) => {
+                newById[column.id] = column;
+            });
+            return newById;
+        }
+    )
+    .handleAction(
+        actions.taskActions.createTaskActions.success,
+        (state, { payload: { id } }) => {
+            return {
+                ...state,
+                1: {
+                    ...state['1'],
+                    tasks: [...state['1'].tasks, id],
+                },
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.deleteTaskActions.success,
+        (state, { payload: { id, columnId } }) => {
             return {
                 ...state,
                 [columnId]: {
                     ...state[columnId],
-                    tasks: state[columnId].tasks.filter((id) => id !== taskId),
+                    tasks: state[columnId].tasks.filter(
+                        (arrId) => arrId !== id
+                    ),
                 },
             };
         }
     )
     .handleAction(
-        actions.taskActions.dropTask,
-        (state, { payload: { draggableId, sourceId, destionationId } }) => {
+        actions.taskActions.dropTaskActions.success,
+        (state, { payload: { id, sourceId, destinationId } }) => {
             const sourceColumn = state[sourceId];
-            const destinationColumn = state[destionationId];
+            const destinationColumn = state[destinationId];
             return {
                 ...state,
                 [sourceId]: {
                     ...sourceColumn,
-                    tasks: sourceColumn.tasks.filter(
-                        (id) => id !== draggableId
-                    ),
+                    tasks: sourceColumn.tasks.filter((arrId) => arrId !== id),
                 },
-                [destionationId]: {
+                [destinationId]: {
                     ...destinationColumn,
-                    tasks: [...destinationColumn.tasks, draggableId],
+                    tasks: [...destinationColumn.tasks, id],
                 },
             };
         }
     )
     .handleAction(
-        actions.columnsActions.deleteColumn,
+        // actions.columnsActions.deleteColumn,
+        actions.columnsActions.deleteColumnActions.success,
         (state, { payload: { id } }) => {
             const columnsWithoutDeleted = { ...state };
             delete columnsWithoutDeleted[id];
@@ -78,7 +188,8 @@ const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
         }
     )
     .handleAction(
-        actions.columnsActions.editColumn,
+        // actions.columnsActions.editColumn,
+        actions.columnsActions.updateColumnActions.success,
         (state, { payload: { id, text } }) => {
             return {
                 ...state,
@@ -92,16 +203,35 @@ const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
 
 const columnAllIdsReducer = createReducer<ColumnState['allIds'], RootAction>(
     initialState.allIds
-).handleAction(
-    actions.columnsActions.deleteColumn,
-    (state, { payload: { id } }) => {
-        return state.filter((columnId) => columnId !== id);
-    }
-);
+)
+    .handleAction(
+        actions.columnsActions.getColumnActions.success,
+        (state, { payload }) => {
+            const newColumnIds = payload.map((column) => column.id);
+            const setColumnIds = Array.from(new Set(newColumnIds));
+            return {
+                ...state,
+                ...setColumnIds,
+            };
+        }
+    )
+    .handleAction(
+        // actions.columnsActions.deleteColumn,
+        actions.columnsActions.deleteColumnActions.success,
+        (state, { payload: { id } }) => {
+            return state.filter((columnId) => columnId !== id);
+        }
+    );
 
-const columnReducerSafe = combineReducers({
+const columnReducer = combineReducers({
     byId: columnByIdReducerSafe,
     allIds: columnAllIdsReducer,
 });
 
-export default columnReducerSafe;
+const reducer = reduceReducers(
+    initialState,
+    columnReducer,
+    columnReducerRequest
+);
+
+export default reducer;

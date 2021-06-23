@@ -10,6 +10,7 @@ import ButtonComponent from './components/button';
 import Column from './components/column';
 import { columnWithTasksSelector } from './store/selectors';
 import { actions } from './store/actions';
+import { createTasks, dropTasks } from './store/tasks/taskActions';
 
 const validationSchema = yup.object({
     taskText: yup.string().trim().required('inputs.error'),
@@ -21,7 +22,7 @@ const App: React.FC = () => {
     const { t, i18n } = useTranslation();
 
     const onAddTask = (text: string) => {
-        dispatch(actions.taskActions.addTask(text));
+        dispatch(createTasks(text));
     };
 
     const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
@@ -50,12 +51,21 @@ const App: React.FC = () => {
         if (destination.droppableId === source.droppableId) {
             return;
         }
+        // dispatch(
+        //     actions.taskActions.dropTask({
+        //         id: draggableId,
+        //         destinationId: destination.droppableId,
+        //         sourceId: source.droppableId,
+        //         order: source.index,
+        //     })
+        // );
         dispatch(
-            actions.taskActions.dropTask({
-                destionationId: destination.droppableId,
-                sourceId: source.droppableId,
+            dropTasks(
                 draggableId,
-            })
+                destination.droppableId,
+                source.droppableId,
+                source.index
+            )
         );
     };
 
