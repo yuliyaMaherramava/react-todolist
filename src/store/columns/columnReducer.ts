@@ -1,9 +1,11 @@
 import reduceReducers from 'reduce-reducers';
 import { combineReducers } from 'redux';
-import { createReducer } from 'typesafe-actions';
-import { actions, RootAction } from '../actions';
+import { createReducer, Action } from 'typesafe-actions';
+import { actions } from '../actions';
 
 export const initialState: ColumnState = {
+    loading: false,
+    error: null,
     byId: {
         1: {
             id: '1',
@@ -27,9 +29,7 @@ export const initialState: ColumnState = {
     allIds: ['1', '2', '3'],
 };
 
-const columnReducerRequest = createReducer<ColumnState, RootAction>(
-    initialState
-)
+const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
     .handleAction(
         actions.columnsActions.getColumnActions.request,
         (state, action) => {
@@ -121,7 +121,7 @@ const columnReducerRequest = createReducer<ColumnState, RootAction>(
         }
     );
 
-const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
+const columnByIdReducerSafe = createReducer<ColumnById, Action>(
     initialState.byId
 )
     .handleAction(
@@ -201,7 +201,7 @@ const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
         }
     );
 
-const columnAllIdsReducer = createReducer<ColumnState['allIds'], RootAction>(
+const columnAllIdsReducer = createReducer<ColumnState['allIds'], Action>(
     initialState.allIds
 )
     .handleAction(
@@ -226,6 +226,8 @@ const columnAllIdsReducer = createReducer<ColumnState['allIds'], RootAction>(
 const columnReducer = combineReducers({
     byId: columnByIdReducerSafe,
     allIds: columnAllIdsReducer,
+    loading: (state: boolean = initialState.loading) => state,
+    error: (state: Error | null = initialState.error) => state,
 });
 
 const reducer = reduceReducers(

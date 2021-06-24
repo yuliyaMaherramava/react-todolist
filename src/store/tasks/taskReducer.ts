@@ -1,7 +1,7 @@
 import { combineReducers, Reducer } from 'redux';
 import reduceReducers from 'reduce-reducers';
-import { createReducer } from 'typesafe-actions';
-import { actions, RootAction } from '../actions';
+import { createReducer, Action } from 'typesafe-actions';
+import { actions } from '../actions';
 
 export const initialState: TaskState = {
     loading: false,
@@ -10,7 +10,7 @@ export const initialState: TaskState = {
     allIds: [],
 };
 
-const taskReducerRequest = createReducer<TaskState, RootAction>(initialState)
+const taskReducerRequest = createReducer<TaskState, Action>(initialState)
     .handleAction(
         actions.taskActions.getTaskActions.request,
         (state, action) => {
@@ -162,7 +162,7 @@ const taskReducerRequest = createReducer<TaskState, RootAction>(initialState)
         }
     );
 
-const taskByIdReducer = createReducer<TaskById, RootAction>(initialState.byId)
+const taskByIdReducer = createReducer<TaskById, Action>(initialState.byId)
     .handleAction(
         actions.taskActions.getTaskActions.success,
         (state, { payload }) => {
@@ -228,7 +228,7 @@ const taskByIdReducer = createReducer<TaskById, RootAction>(initialState.byId)
         }
     );
 
-const taskAllIdsReducer = createReducer<TaskState['allIds'], RootAction>(
+const taskAllIdsReducer = createReducer<TaskState['allIds'], Action>(
     initialState.allIds
 )
     .handleAction(
@@ -255,7 +255,7 @@ const taskAllIdsReducer = createReducer<TaskState['allIds'], RootAction>(
         }
     );
 
-const taskReducer: Reducer<TaskState, RootAction> = combineReducers({
+const taskReducer: Reducer<TaskState, Action> = combineReducers({
     byId: taskByIdReducer,
     allIds: taskAllIdsReducer,
     loading: (state: boolean = initialState.loading) => state,

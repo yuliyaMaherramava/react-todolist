@@ -24,6 +24,8 @@ interface ColumnById {
 }
 
 interface ColumnState {
+    loading: boolean;
+    error: Error | null;
     byId: ColumnById;
     allIds: Array<string>;
 }

@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import { createAsyncAction } from 'typesafe-actions';
 import api from '../../api';
 
