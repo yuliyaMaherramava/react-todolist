@@ -12,7 +12,6 @@ export const deleteColumnActions = createAsyncAction(
     'columns/DELETE_REQUEST',
     'columns/DELETE_SUCCESS',
     'columns/DELETE_FAILED'
-    // eslint-disable-next-line @typescript-eslint/member-delimiter-style
 )<undefined, DeleteColumnPayload, Error>();
 
 export const updateColumnActions = createAsyncAction(
@@ -24,8 +23,7 @@ export const updateColumnActions = createAsyncAction(
 export const getColumns = () => (dispatch: Dispatch) => {
     dispatch(getColumnActions.request());
     api.get<Array<Column>>('columns')
-        // eslint-disable-next-line prettier/prettier
-        .then(({data}) => {
+        .then(({ data }) => {
             dispatch(getColumnActions.success(data));
         })
         .catch((error: Error) => {
