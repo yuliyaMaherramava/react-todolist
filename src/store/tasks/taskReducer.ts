@@ -1,4 +1,4 @@
-import { combineReducers, Reducer } from 'redux';
+import { combineReducers } from 'redux';
 import reduceReducers from 'reduce-reducers';
 import { createReducer, Action } from 'typesafe-actions';
 import { actions } from '../actions';
@@ -11,26 +11,20 @@ export const initialState: TaskState = {
 };
 
 const taskReducerRequest = createReducer<TaskState, Action>(initialState)
-    .handleAction(
-        actions.taskActions.getTaskActions.request,
-        (state, action) => {
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.getTaskActions.success,
-        (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: null,
-            };
-        }
-    )
+    .handleAction(actions.taskActions.getTaskActions.request, (state) => {
+        return {
+            ...state,
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.taskActions.getTaskActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
+        };
+    })
     .handleAction(
         actions.taskActions.getTaskActions.failure,
         (state, action) => {
@@ -41,26 +35,20 @@ const taskReducerRequest = createReducer<TaskState, Action>(initialState)
             };
         }
     )
-    .handleAction(
-        actions.taskActions.createTaskActions.request,
-        (state, action) => {
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.createTaskActions.success,
-        (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: null,
-            };
-        }
-    )
+    .handleAction(actions.taskActions.createTaskActions.request, (state) => {
+        return {
+            ...state,
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.taskActions.createTaskActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
+        };
+    })
     .handleAction(
         actions.taskActions.createTaskActions.failure,
         (state, action) => {
@@ -71,26 +59,20 @@ const taskReducerRequest = createReducer<TaskState, Action>(initialState)
             };
         }
     )
-    .handleAction(
-        actions.taskActions.updateTaskActions.request,
-        (state, action) => {
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.updateTaskActions.success,
-        (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: null,
-            };
-        }
-    )
+    .handleAction(actions.taskActions.updateTaskActions.request, (state) => {
+        return {
+            ...state,
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.taskActions.updateTaskActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
+        };
+    })
     .handleAction(
         actions.taskActions.updateTaskActions.failure,
         (state, action) => {
@@ -101,26 +83,20 @@ const taskReducerRequest = createReducer<TaskState, Action>(initialState)
             };
         }
     )
-    .handleAction(
-        actions.taskActions.deleteTaskActions.request,
-        (state, action) => {
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.deleteTaskActions.success,
-        (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: null,
-            };
-        }
-    )
+    .handleAction(actions.taskActions.deleteTaskActions.request, (state) => {
+        return {
+            ...state,
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.taskActions.deleteTaskActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
+        };
+    })
     .handleAction(
         actions.taskActions.deleteTaskActions.failure,
         (state, action) => {
@@ -131,26 +107,20 @@ const taskReducerRequest = createReducer<TaskState, Action>(initialState)
             };
         }
     )
-    .handleAction(
-        actions.taskActions.dropTaskActions.request,
-        (state, action) => {
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.dropTaskActions.success,
-        (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: null,
-            };
-        }
-    )
+    .handleAction(actions.taskActions.dropTaskActions.request, (state) => {
+        return {
+            ...state,
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.taskActions.dropTaskActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
+        };
+    })
     .handleAction(
         actions.taskActions.dropTaskActions.failure,
         (state, action) => {
@@ -255,7 +225,7 @@ const taskAllIdsReducer = createReducer<TaskState['allIds'], Action>(
         }
     );
 
-const taskReducer: Reducer<TaskState, Action> = combineReducers({
+const taskReducer = combineReducers({
     byId: taskByIdReducer,
     allIds: taskAllIdsReducer,
     loading: (state: boolean = initialState.loading) => state,

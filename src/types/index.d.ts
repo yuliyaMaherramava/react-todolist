@@ -24,10 +24,10 @@ interface ColumnById {
 }
 
 interface ColumnState {
-    loading: boolean;
-    error: Error | null;
     byId: ColumnById;
     allIds: Array<string>;
+    loading: boolean;
+    error: Error | null;
 }
 
 interface TaskState {
@@ -61,4 +61,8 @@ interface UpdateTaskPayload {
 interface UpdateColumnPayload {
     id: string;
     text: string;
+}
+
+interface DeleteColumnPayload {
+    id: string;
 }

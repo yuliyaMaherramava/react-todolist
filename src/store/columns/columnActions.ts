@@ -2,18 +2,6 @@ import { Dispatch } from 'redux';
 import { createAsyncAction } from 'typesafe-actions';
 import api from '../../api';
 
-// export const editColumn = createAction(
-//     'columns/EDIT',
-//     (id: string, text: string) => ({
-//         id,
-//         text,
-//     })
-// )();
-
-// export const deleteColumn = createAction('columns/DELETE', (id: string) => ({
-//     id,
-// }))();
-
 export const getColumnActions = createAsyncAction(
     'columns/GET_REQUEST',
     'columns/GET_SUCCESS',
@@ -25,7 +13,7 @@ export const deleteColumnActions = createAsyncAction(
     'columns/DELETE_SUCCESS',
     'columns/DELETE_FAILED'
     // eslint-disable-next-line @typescript-eslint/member-delimiter-style
-)<undefined, { id: string }, Error>();
+)<undefined, DeleteColumnPayload, Error>();
 
 export const updateColumnActions = createAsyncAction(
     'columns/UPDATE_REQUEST',

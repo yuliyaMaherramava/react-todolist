@@ -6,50 +6,25 @@ import { actions } from '../actions';
 export const initialState: ColumnState = {
     loading: false,
     error: null,
-    byId: {
-        1: {
-            id: '1',
-            name: 'To do',
-            tasks: [],
-            order: 1,
-        },
-        2: {
-            id: '2',
-            name: 'In progress',
-            tasks: [],
-            order: 2,
-        },
-        3: {
-            id: '3',
-            name: 'Done',
-            tasks: [],
-            order: 3,
-        },
-    },
-    allIds: ['1', '2', '3'],
+    byId: {},
+    allIds: [],
 };
 
 const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
-    .handleAction(
-        actions.columnsActions.getColumnActions.request,
-        (state, action) => {
-            return {
-                ...state,
-                loading: true,
-                error: null,
-            };
-        }
-    )
-    .handleAction(
-        actions.columnsActions.getColumnActions.success,
-        (state, action) => {
-            return {
-                ...state,
-                loading: false,
-                error: null,
-            };
-        }
-    )
+    .handleAction(actions.columnsActions.getColumnActions.request, (state) => {
+        return {
+            ...state,
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.columnsActions.getColumnActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
+        };
+    })
     .handleAction(
         actions.columnsActions.getColumnActions.failure,
         (state, action) => {
@@ -62,7 +37,7 @@ const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
     )
     .handleAction(
         actions.columnsActions.updateColumnActions.request,
-        (state, action) => {
+        (state) => {
             return {
                 ...state,
                 loading: true,
@@ -72,7 +47,7 @@ const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
     )
     .handleAction(
         actions.columnsActions.updateColumnActions.success,
-        (state, action) => {
+        (state) => {
             return {
                 ...state,
                 loading: false,
@@ -92,7 +67,7 @@ const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
     )
     .handleAction(
         actions.columnsActions.deleteColumnActions.request,
-        (state, action) => {
+        (state) => {
             return {
                 ...state,
                 loading: true,
@@ -102,7 +77,7 @@ const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
     )
     .handleAction(
         actions.columnsActions.deleteColumnActions.success,
-        (state, action) => {
+        (state) => {
             return {
                 ...state,
                 loading: false,
@@ -137,11 +112,12 @@ const columnByIdReducerSafe = createReducer<ColumnById, Action>(
     .handleAction(
         actions.taskActions.createTaskActions.success,
         (state, { payload: { id } }) => {
+            const columnId = '60d30d8efeac96162a86c6bc';
             return {
                 ...state,
-                1: {
-                    ...state['1'],
-                    tasks: [...state['1'].tasks, id],
+                [columnId]: {
+                    ...state[columnId],
+                    tasks: [...state[columnId].tasks, id],
                 },
             };
         }
@@ -179,7 +155,6 @@ const columnByIdReducerSafe = createReducer<ColumnById, Action>(
         }
     )
     .handleAction(
-        // actions.columnsActions.deleteColumn,
         actions.columnsActions.deleteColumnActions.success,
         (state, { payload: { id } }) => {
             const columnsWithoutDeleted = { ...state };
@@ -188,7 +163,6 @@ const columnByIdReducerSafe = createReducer<ColumnById, Action>(
         }
     )
     .handleAction(
-        // actions.columnsActions.editColumn,
         actions.columnsActions.updateColumnActions.success,
         (state, { payload: { id, text } }) => {
             return {
@@ -216,7 +190,6 @@ const columnAllIdsReducer = createReducer<ColumnState['allIds'], Action>(
         }
     )
     .handleAction(
-        // actions.columnsActions.deleteColumn,
         actions.columnsActions.deleteColumnActions.success,
         (state, { payload: { id } }) => {
             return state.filter((columnId) => columnId !== id);
