@@ -7,9 +7,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
 import classes from './index.module.scss';
 import Task from './task';
-import { actions } from '../../store/actions';
-import { deleteTasks, updateTasks } from '../../store/tasks/taskActions';
-import { deleteColumns } from '../../store/columns/columnActions';
+import {
+    updateColumns,
+    deleteColumns,
+} from '../../store/columns/columnActions';
 
 type PropsType = {
     name: string;
@@ -32,8 +33,7 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     };
 
     const updateColumn = () => {
-        // dispatch(actions.columnsActions.editColumn(id, columnText));
-        dispatch(updateTasks(id, columnText));
+        dispatch(updateColumns(id, columnText));
     };
 
     const onColumnBlur = () => {
@@ -47,18 +47,17 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     };
 
     const onDeleteColumn = () => {
-        tasks.forEach((task) => {
-            dispatch(deleteTasks(task.id, id));
-        });
-        // dispatch(actions.columnsActions.deleteColumn(id));
+        // tasks.forEach((task) => {
+        //     dispatch(deleteTasks(task._id, id));
+        // });
         dispatch(deleteColumns(id));
     };
 
     const taskElements = tasks.map((task, index) => (
         <Task
-            key={task.id}
+            key={task._id}
             name={task.name}
-            id={task.id}
+            id={task._id}
             columnId={task.columnId}
             index={index}
         />

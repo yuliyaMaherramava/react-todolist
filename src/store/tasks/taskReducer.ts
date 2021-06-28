@@ -7,7 +7,7 @@ export const initialState: TaskState = {
     loading: false,
     error: null,
     byId: {},
-    allIds: [],
+    byColumn: {},
 };
 
 const taskReducerRequest = createReducer<TaskState, Action>(initialState)
@@ -138,7 +138,7 @@ const taskByIdReducer = createReducer<TaskById, Action>(initialState.byId)
         (state, { payload }) => {
             const newById = { ...state };
             payload.forEach((task) => {
-                newById[task.id] = task;
+                newById[task._id] = task;
             });
             return newById;
         }
@@ -147,12 +147,12 @@ const taskByIdReducer = createReducer<TaskById, Action>(initialState.byId)
         actions.taskActions.createTaskActions.success,
         (
             state,
-            { payload: { id, name, columnId, order, createdAt, updatedAt } }
+            { payload: { _id, name, columnId, order, createdAt, updatedAt } }
         ) => {
             return {
                 ...state,
-                [id]: {
-                    id,
+                [_id]: {
+                    _id,
                     name,
                     order,
                     columnId,
@@ -174,12 +174,12 @@ const taskByIdReducer = createReducer<TaskById, Action>(initialState.byId)
     )
     .handleAction(
         actions.taskActions.updateTaskActions.success,
-        (state, { payload: { id, taskText } }) => {
+        (state, { payload: { id, name } }) => {
             return {
                 ...state,
                 [id]: {
                     ...state[id],
-                    name: taskText,
+                    name,
                 },
             };
         }
@@ -198,36 +198,61 @@ const taskByIdReducer = createReducer<TaskById, Action>(initialState.byId)
         }
     );
 
-const taskAllIdsReducer = createReducer<TaskState['allIds'], Action>(
-    initialState.allIds
+const taskByColumnReducer = createReducer<TaskState['byColumn'], Action>(
+    initialState.byColumn
 )
+    .handleAction(
+        actions.columnsActions.getColumnActions.success,
+        (state, { payload }) => {
+            const newByColumn = { ...state };
+            payload.forEach((column) => {
+                newByColumn[column._id] = [];
+            });
+            return newByColumn;
+        }
+    )
     .handleAction(
         actions.taskActions.getTaskActions.success,
         (state, { payload }) => {
-            const newTasksIds = payload.map((task) => task.id);
-            const setTaskIds = Array.from(new Set(newTasksIds));
-            return {
-                ...state,
-                ...setTaskIds,
-            };
+            const newByColumn = { ...state };
+            payload.forEach((task) => {
+                newByColumn[task.columnId].push(task._id);
+            });
+            return { ...state, ...newByColumn };
         }
     )
     .handleAction(
         actions.taskActions.createTaskActions.success,
-        (state, { payload: { id } }) => {
-            return [...state, id];
+        (state, { payload: { _id, columnId } }) => {
+            return {
+                ...state,
+                [columnId]: [...state[columnId], _id],
+            };
         }
     )
     .handleAction(
         actions.taskActions.deleteTaskActions.success,
-        (state, { payload: { id } }) => {
-            return state.filter((arrId) => arrId !== id);
+        (state, { payload: { id, columnId } }) => {
+            return {
+                ...state,
+                [columnId]: state[columnId].filter((arrId) => arrId !== id),
+            };
+        }
+    )
+    .handleAction(
+        actions.taskActions.dropTaskActions.success,
+        (state, { payload: { id, destinationId, sourceId } }) => {
+            return {
+                ...state,
+                [sourceId]: state[sourceId].filter((arrId) => arrId !== id),
+                [destinationId]: [...state[destinationId], id],
+            };
         }
     );
 
 const taskReducer = combineReducers({
     byId: taskByIdReducer,
-    allIds: taskAllIdsReducer,
+    byColumn: taskByColumnReducer,
     loading: (state: boolean = initialState.loading) => state,
     error: (state: Error | null = initialState.error) => state,
 });

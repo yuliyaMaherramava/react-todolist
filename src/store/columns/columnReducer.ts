@@ -104,56 +104,56 @@ const columnByIdReducerSafe = createReducer<ColumnById, Action>(
         (state, { payload }) => {
             const newById = { ...state };
             payload.forEach((column) => {
-                newById[column.id] = column;
+                newById[column._id] = column;
             });
             return newById;
         }
     )
-    .handleAction(
-        actions.taskActions.createTaskActions.success,
-        (state, { payload: { id } }) => {
-            const columnId = '60d30d8efeac96162a86c6bc';
-            return {
-                ...state,
-                [columnId]: {
-                    ...state[columnId],
-                    tasks: [...state[columnId].tasks, id],
-                },
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.deleteTaskActions.success,
-        (state, { payload: { id, columnId } }) => {
-            return {
-                ...state,
-                [columnId]: {
-                    ...state[columnId],
-                    tasks: state[columnId].tasks.filter(
-                        (arrId) => arrId !== id
-                    ),
-                },
-            };
-        }
-    )
-    .handleAction(
-        actions.taskActions.dropTaskActions.success,
-        (state, { payload: { id, sourceId, destinationId } }) => {
-            const sourceColumn = state[sourceId];
-            const destinationColumn = state[destinationId];
-            return {
-                ...state,
-                [sourceId]: {
-                    ...sourceColumn,
-                    tasks: sourceColumn.tasks.filter((arrId) => arrId !== id),
-                },
-                [destinationId]: {
-                    ...destinationColumn,
-                    tasks: [...destinationColumn.tasks, id],
-                },
-            };
-        }
-    )
+    // .handleAction(
+    //     actions.taskActions.createTaskActions.success,
+    //     (state, { payload: { _id } }) => {
+    //         const columnId = '60d30d8efeac96162a86c6bc';
+    //         return {
+    //             ...state,
+    //             [columnId]: {
+    //                 ...state[columnId],
+    //                 tasks: [...state[columnId].tasks, _id],
+    //             },
+    //         };
+    //     }
+    // )
+    // .handleAction(
+    //     actions.taskActions.deleteTaskActions.success,
+    //     (state, { payload: { id, columnId } }) => {
+    //         return {
+    //             ...state,
+    //             [columnId]: {
+    //                 ...state[columnId],
+    //                 tasks: state[columnId].tasks.filter(
+    //                     (arrId) => arrId !== id
+    //                 ),
+    //             },
+    //         };
+    //     }
+    // )
+    // .handleAction(
+    //     actions.taskActions.dropTaskActions.success,
+    //     (state, { payload: { id, destinationId, sourceId } }) => {
+    //         const sourceColumn = state[sourceId];
+    //         const destinationColumn = state[destinationId];
+    //         return {
+    //             ...state,
+    //             [sourceId]: {
+    //                 ...sourceColumn,
+    //                 tasks: sourceColumn.tasks.filter((arrId) => arrId !== id),
+    //             },
+    //             [destinationId]: {
+    //                 ...destinationColumn,
+    //                 tasks: [...destinationColumn.tasks, id],
+    //             },
+    //         };
+    //     }
+    // )
     .handleAction(
         actions.columnsActions.deleteColumnActions.success,
         (state, { payload: { id } }) => {
@@ -181,12 +181,9 @@ const columnAllIdsReducer = createReducer<ColumnState['allIds'], Action>(
     .handleAction(
         actions.columnsActions.getColumnActions.success,
         (state, { payload }) => {
-            const newColumnIds = payload.map((column) => column.id);
+            const newColumnIds = payload.map((column) => column._id);
             const setColumnIds = Array.from(new Set(newColumnIds));
-            return {
-                ...state,
-                ...setColumnIds,
-            };
+            return setColumnIds;
         }
     )
     .handleAction(

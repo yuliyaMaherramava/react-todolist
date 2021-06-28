@@ -53,16 +53,15 @@ export const updateTaskActions = createAsyncAction(
 )<undefined, UpdateTaskPayload, Error>();
 
 export const dropTaskActions = createAsyncAction(
-    'tasks/UPDATE_REQUEST',
-    'tasks/UPDATE_SUCCESS',
-    'tasks/UPDATE_FAILED'
+    'tasks/drop/UPDATE_REQUEST',
+    'tasks/drop/UPDATE_SUCCESS',
+    'tasks/drop/UPDATE_FAILED'
 )<undefined, DropTaskPayload, Error>();
 
 export const getTasks = () => (dispatch: Dispatch) => {
     dispatch(getTaskActions.request());
     api.get<Array<Task>>('tasks')
-        // eslint-disable-next-line prettier/prettier
-        .then(({data}) => {
+        .then(({ data }) => {
             dispatch(getTaskActions.success(data));
         })
         .catch((error: Error) => {
@@ -70,21 +69,26 @@ export const getTasks = () => (dispatch: Dispatch) => {
         });
 };
 
-export const createTasks = (text: string) => (dispatch: Dispatch) => {
-    dispatch(createTaskActions.request());
-    api.post<Task>('tasks', { text })
-        .then(({ data }) => {
-            dispatch(createTaskActions.success(data));
-        })
-        .catch((error: Error) => {
-            dispatch(createTaskActions.failure(error));
-        });
-};
+export const createTasks =
+    (text: string) => (dispatch: Dispatch, getState: any) => {
+        dispatch(createTaskActions.request());
+        const newState = getState();
+        const startColumnId = '60d30d8efeac96162a86c6bc';
+        const newOrder = newState.tasks.byColumn[startColumnId].length - 1;
+
+        api.post<Task>('tasks', { text, startColumnId, newOrder })
+            .then(({ data }) => {
+                dispatch(createTaskActions.success(data));
+            })
+            .catch((error: Error) => {
+                dispatch(createTaskActions.failure(error));
+            });
+    };
 
 export const deleteTasks =
     (id: string, columnId: string) => (dispatch: Dispatch) => {
         dispatch(deleteTaskActions.request());
-        api.delete('tasks', { data: id })
+        api.delete('tasks', { data: { id } })
             .then(() => {
                 dispatch(deleteTaskActions.success({ id, columnId }));
             })
@@ -94,11 +98,13 @@ export const deleteTasks =
     };
 
 export const updateTasks =
-    (id: string, taskText: string) => (dispatch: Dispatch) => {
+    (id: string, name: string) => (dispatch: Dispatch) => {
         dispatch(updateTaskActions.request());
-        api.put('tasks', { id, taskText })
+        api.put('tasks', { id, name })
             .then(() => {
-                dispatch(updateTaskActions.success({ id, taskText }));
+                console.log('in promise');
+                dispatch(updateTaskActions.success({ id, name }));
+                console.log('after promise');
             })
             .catch((error: Error) => {
                 dispatch(updateTaskActions.failure(error));
@@ -109,7 +115,7 @@ export const dropTasks =
     (id: string, destinationId: string, sourceId: string, order: number) =>
     (dispatch: Dispatch) => {
         dispatch(dropTaskActions.request());
-        api.put('tasks', { id, destinationId, sourceId, order })
+        api.put('tasks', { id, destinationId, order })
             .then(() => {
                 dispatch(
                     dropTaskActions.success({

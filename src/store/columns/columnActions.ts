@@ -33,7 +33,7 @@ export const getColumns = () => (dispatch: Dispatch) => {
 
 export const deleteColumns = (id: string) => (dispatch: Dispatch) => {
     dispatch(deleteColumnActions.request());
-    api.delete('columns', { data: id })
+    api.delete('columns', { data: { id } })
         .then(() => {
             dispatch(deleteColumnActions.success({ id }));
         })

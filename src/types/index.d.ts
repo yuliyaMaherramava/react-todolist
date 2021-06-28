@@ -1,5 +1,5 @@
 interface Task {
-    id: string;
+    _id: string;
     name: string;
     order: number;
     columnId: string;
@@ -9,10 +9,13 @@ interface Task {
 }
 
 interface Column {
-    id: string;
+    _id: string;
+    tasks?: Array<Task>;
     name: string;
-    tasks: Array<string>;
     order: number;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
 }
 
 interface TaskById {
@@ -29,14 +32,16 @@ interface ColumnState {
     loading: boolean;
     error: Error | null;
 }
+interface ByColumnState {
+    [key: string]: Array<string>;
+}
 
 interface TaskState {
     loading: boolean;
     error: Error | null;
     byId: TaskById;
-    allIds: Array<string>;
+    byColumn: ByColumnState;
 }
-
 interface StateType {
     columns: ColumnState;
     tasks: TaskState;
@@ -55,7 +60,7 @@ interface DeleteTaskPayload {
 
 interface UpdateTaskPayload {
     id: string;
-    taskText: string;
+    name: string;
 }
 
 interface UpdateColumnPayload {
