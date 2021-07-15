@@ -66,7 +66,8 @@ const App: React.FC = () => {
                 draggableId,
                 destination.droppableId,
                 source.droppableId,
-                source.index
+                source.index,
+                destination.index
             )
         );
     };

@@ -51,7 +51,8 @@ interface DropTaskPayload {
     id: string;
     destinationId: string;
     sourceId: string;
-    order: number;
+    sourceOrder: number;
+    destinationOrder: number;
 }
 interface DeleteTaskPayload {
     id: string;

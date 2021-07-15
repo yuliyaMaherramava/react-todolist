@@ -186,13 +186,13 @@ const taskByIdReducer = createReducer<TaskById, Action>(initialState.byId)
     )
     .handleAction(
         actions.taskActions.dropTaskActions.success,
-        (state, { payload: { id, destinationId, order } }) => {
+        (state, { payload: { id, destinationId, destinationOrder } }) => {
             return {
                 ...state,
                 [id]: {
                     ...state[id],
                     columnId: destinationId,
-                    order,
+                    order: destinationOrder,
                 },
             };
         }
@@ -242,6 +242,11 @@ const taskByColumnReducer = createReducer<TaskState['byColumn'], Action>(
     .handleAction(
         actions.taskActions.dropTaskActions.success,
         (state, { payload: { id, destinationId, sourceId } }) => {
+            if (destinationId === sourceId) {
+                return {
+                    ...state,
+                };
+            }
             return {
                 ...state,
                 [sourceId]: state[sourceId].filter((arrId) => arrId !== id),

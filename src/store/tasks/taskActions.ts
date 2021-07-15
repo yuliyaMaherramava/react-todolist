@@ -74,7 +74,7 @@ export const createTasks =
         dispatch(createTaskActions.request());
         const newState = getState();
         const startColumnId = '60d30d8efeac96162a86c6bc';
-        const newOrder = newState.tasks.byColumn[startColumnId].length - 1;
+        const newOrder = newState.tasks.byColumn[startColumnId].length;
 
         api.post<Task>('tasks', { text, startColumnId, newOrder })
             .then(({ data }) => {
@@ -102,9 +102,7 @@ export const updateTasks =
         dispatch(updateTaskActions.request());
         api.put('tasks', { id, name })
             .then(() => {
-                console.log('in promise');
                 dispatch(updateTaskActions.success({ id, name }));
-                console.log('after promise');
             })
             .catch((error: Error) => {
                 dispatch(updateTaskActions.failure(error));
@@ -112,17 +110,24 @@ export const updateTasks =
     };
 
 export const dropTasks =
-    (id: string, destinationId: string, sourceId: string, order: number) =>
-    (dispatch: Dispatch) => {
+    (
+        id: string,
+        destinationId: string,
+        sourceId: string,
+        sourceOrder: number,
+        destinationOrder: number
+    ) =>
+    (dispatch: Dispatch, getState: any) => {
         dispatch(dropTaskActions.request());
-        api.put('tasks', { id, destinationId, order })
+        api.put('tasks', { id, destinationId, destinationOrder })
             .then(() => {
                 dispatch(
                     dropTaskActions.success({
                         id,
                         destinationId,
                         sourceId,
-                        order,
+                        sourceOrder,
+                        destinationOrder,
                     })
                 );
             })
