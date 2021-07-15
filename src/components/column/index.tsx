@@ -47,9 +47,6 @@ const Column: React.FC<PropsType> = ({ name, tasks, id }) => {
     };
 
     const onDeleteColumn = () => {
-        // tasks.forEach((task) => {
-        //     dispatch(deleteTasks(task._id, id));
-        // });
         dispatch(deleteColumns(id));
     };
 

@@ -4,7 +4,6 @@ import { Draggable } from 'react-beautiful-dnd';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import classes from './index.module.scss';
-import { actions } from '../../../store/actions';
 import { deleteTasks, updateTasks } from '../../../store/tasks/taskActions';
 
 type PropsType = {
@@ -29,7 +28,6 @@ const Task: React.FC<PropsType> = ({ name, id, columnId, index }) => {
     };
 
     const updateTask = () => {
-        // dispatch(actions.taskActions.editTask(id, taskText));
         dispatch(updateTasks(id, taskText));
     };
 

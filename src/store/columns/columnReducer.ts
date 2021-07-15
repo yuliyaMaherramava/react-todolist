@@ -109,51 +109,6 @@ const columnByIdReducerSafe = createReducer<ColumnById, Action>(
             return newById;
         }
     )
-    // .handleAction(
-    //     actions.taskActions.createTaskActions.success,
-    //     (state, { payload: { _id } }) => {
-    //         const columnId = '60d30d8efeac96162a86c6bc';
-    //         return {
-    //             ...state,
-    //             [columnId]: {
-    //                 ...state[columnId],
-    //                 tasks: [...state[columnId].tasks, _id],
-    //             },
-    //         };
-    //     }
-    // )
-    // .handleAction(
-    //     actions.taskActions.deleteTaskActions.success,
-    //     (state, { payload: { id, columnId } }) => {
-    //         return {
-    //             ...state,
-    //             [columnId]: {
-    //                 ...state[columnId],
-    //                 tasks: state[columnId].tasks.filter(
-    //                     (arrId) => arrId !== id
-    //                 ),
-    //             },
-    //         };
-    //     }
-    // )
-    // .handleAction(
-    //     actions.taskActions.dropTaskActions.success,
-    //     (state, { payload: { id, destinationId, sourceId } }) => {
-    //         const sourceColumn = state[sourceId];
-    //         const destinationColumn = state[destinationId];
-    //         return {
-    //             ...state,
-    //             [sourceId]: {
-    //                 ...sourceColumn,
-    //                 tasks: sourceColumn.tasks.filter((arrId) => arrId !== id),
-    //             },
-    //             [destinationId]: {
-    //                 ...destinationColumn,
-    //                 tasks: [...destinationColumn.tasks, id],
-    //             },
-    //         };
-    //     }
-    // )
     .handleAction(
         actions.columnsActions.deleteColumnActions.success,
         (state, { payload: { id } }) => {
