@@ -1,76 +1,116 @@
+import reduceReducers from 'reduce-reducers';
 import { combineReducers } from 'redux';
-import { createReducer } from 'typesafe-actions';
-import { actions, RootAction } from '../actions';
+import { createReducer, Action } from 'typesafe-actions';
+import { actions } from '../actions';
 
 export const initialState: ColumnState = {
-    byId: {
-        1: {
-            id: '1',
-            name: 'To do',
-            tasks: [],
-            order: 1,
-        },
-        2: {
-            id: '2',
-            name: 'In progress',
-            tasks: [],
-            order: 2,
-        },
-        3: {
-            id: '3',
-            name: 'Done',
-            tasks: [],
-            order: 3,
-        },
-    },
-    allIds: ['1', '2', '3'],
+    loading: false,
+    error: null,
+    byId: {},
+    allIds: [],
 };
-const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
-    initialState.byId
-)
-    .handleAction(actions.taskActions.addTask, (state, { payload: { id } }) => {
+
+const columnReducerRequest = createReducer<ColumnState, Action>(initialState)
+    .handleAction(actions.columnsActions.getColumnActions.request, (state) => {
         return {
             ...state,
-            1: {
-                ...state['1'],
-                tasks: [...state['1'].tasks, id],
-            },
+            loading: true,
+            error: null,
+        };
+    })
+    .handleAction(actions.columnsActions.getColumnActions.success, (state) => {
+        return {
+            ...state,
+            loading: false,
+            error: null,
         };
     })
     .handleAction(
-        actions.taskActions.deleteTask,
-        (state, { payload: { taskId, columnId } }) => {
+        actions.columnsActions.getColumnActions.failure,
+        (state, action) => {
             return {
                 ...state,
-                [columnId]: {
-                    ...state[columnId],
-                    tasks: state[columnId].tasks.filter((id) => id !== taskId),
-                },
+                loading: false,
+                error: action.payload,
             };
         }
     )
     .handleAction(
-        actions.taskActions.dropTask,
-        (state, { payload: { draggableId, sourceId, destionationId } }) => {
-            const sourceColumn = state[sourceId];
-            const destinationColumn = state[destionationId];
+        actions.columnsActions.updateColumnActions.request,
+        (state) => {
             return {
                 ...state,
-                [sourceId]: {
-                    ...sourceColumn,
-                    tasks: sourceColumn.tasks.filter(
-                        (id) => id !== draggableId
-                    ),
-                },
-                [destionationId]: {
-                    ...destinationColumn,
-                    tasks: [...destinationColumn.tasks, draggableId],
-                },
+                loading: true,
+                error: null,
             };
         }
     )
     .handleAction(
-        actions.columnsActions.deleteColumn,
+        actions.columnsActions.updateColumnActions.success,
+        (state) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.updateColumnActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.request,
+        (state) => {
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.success,
+        (state) => {
+            return {
+                ...state,
+                loading: false,
+                error: null,
+            };
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.failure,
+        (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        }
+    );
+
+const columnByIdReducerSafe = createReducer<ColumnById, Action>(
+    initialState.byId
+)
+    .handleAction(
+        actions.columnsActions.getColumnActions.success,
+        (state, { payload }) => {
+            const newById = { ...state };
+            payload.forEach((column) => {
+                newById[column._id] = column;
+            });
+            return newById;
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.success,
         (state, { payload: { id } }) => {
             const columnsWithoutDeleted = { ...state };
             delete columnsWithoutDeleted[id];
@@ -78,7 +118,7 @@ const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
         }
     )
     .handleAction(
-        actions.columnsActions.editColumn,
+        actions.columnsActions.updateColumnActions.success,
         (state, { payload: { id, text } }) => {
             return {
                 ...state,
@@ -90,18 +130,35 @@ const columnByIdReducerSafe = createReducer<ColumnById, RootAction>(
         }
     );
 
-const columnAllIdsReducer = createReducer<ColumnState['allIds'], RootAction>(
+const columnAllIdsReducer = createReducer<ColumnState['allIds'], Action>(
     initialState.allIds
-).handleAction(
-    actions.columnsActions.deleteColumn,
-    (state, { payload: { id } }) => {
-        return state.filter((columnId) => columnId !== id);
-    }
-);
+)
+    .handleAction(
+        actions.columnsActions.getColumnActions.success,
+        (state, { payload }) => {
+            const newColumnIds = payload.map((column) => column._id);
+            const setColumnIds = Array.from(new Set(newColumnIds));
+            return setColumnIds;
+        }
+    )
+    .handleAction(
+        actions.columnsActions.deleteColumnActions.success,
+        (state, { payload: { id } }) => {
+            return state.filter((columnId) => columnId !== id);
+        }
+    );
 
-const columnReducerSafe = combineReducers({
+const columnReducer = combineReducers({
     byId: columnByIdReducerSafe,
     allIds: columnAllIdsReducer,
+    loading: (state: boolean = initialState.loading) => state,
+    error: (state: Error | null = initialState.error) => state,
 });
 
-export default columnReducerSafe;
+const reducer = reduceReducers(
+    initialState,
+    columnReducer,
+    columnReducerRequest
+);
+
+export default reducer;

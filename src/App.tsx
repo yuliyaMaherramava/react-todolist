@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback } from 'react';
+import React, { MouseEvent, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,8 @@ import InputComponent from './components/input';
 import ButtonComponent from './components/button';
 import Column from './components/column';
 import { columnWithTasksSelector } from './store/selectors';
-import { actions } from './store/actions';
+import { createTasks, dropTasks, getTasks } from './store/tasks/taskActions';
+import { getColumns } from './store/columns/columnActions';
 
 const validationSchema = yup.object({
     taskText: yup.string().trim().required('inputs.error'),
@@ -18,10 +19,19 @@ const validationSchema = yup.object({
 const App: React.FC = () => {
     const dispatch = useDispatch();
     const columns = useSelector(columnWithTasksSelector);
+
     const { t, i18n } = useTranslation();
 
+    const getColumn = useEffect(() => {
+        dispatch(getColumns());
+    }, []);
+
+    const getTask = useEffect(() => {
+        dispatch(getTasks());
+    }, []);
+
     const onAddTask = (text: string) => {
-        dispatch(actions.taskActions.addTask(text));
+        dispatch(createTasks(text));
     };
 
     const { handleSubmit, handleChange, handleBlur, touched, errors, values } =
@@ -50,20 +60,22 @@ const App: React.FC = () => {
         if (destination.droppableId === source.droppableId) {
             return;
         }
+
         dispatch(
-            actions.taskActions.dropTask({
-                destionationId: destination.droppableId,
-                sourceId: source.droppableId,
+            dropTasks(
                 draggableId,
-            })
+                destination.droppableId,
+                source.droppableId,
+                source.index,
+                destination.index
+            )
         );
     };
-
     const columnsElements = columns.map((column) => (
         <Column
             name={column.name}
-            key={column.id}
-            id={column.id}
+            key={column._id}
+            id={column._id}
             tasks={column.tasks}
         />
     ));

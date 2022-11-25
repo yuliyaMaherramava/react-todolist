@@ -20,6 +20,7 @@
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
     "no-use-before-define": "off",
+    "no-underscore-dangle": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/jsx-filename-extension": [
       "warn",
@@ -80,6 +81,9 @@
   },
   "settings": {
     "import/resolver": {
+      "node":{
+        "extensions":[".js", ".jsx", ".ts", ".tsx"]
+      },
       "typescript": {}
     }
   }
